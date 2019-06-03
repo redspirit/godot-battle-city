@@ -1,10 +1,31 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/Bullet.gd" type="Script" id=1]
 [ext_resource path="res://sprites/bc_1.png" type="Texture" id=2]
+[ext_resource path="res://sprites/bc_0.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4, 4 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 3.94318, 4 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "explode"
+length = 1.5
+step = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 267, 282, 283 ]
+}
 
 [node name="bullet" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -17,3 +38,23 @@ hframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 2 )
+
+[node name="explode_sprite" type="Sprite" parent="."]
+visible = false
+scale = Vector2( 2, 2 )
+texture = ExtResource( 3 )
+vframes = 18
+hframes = 16
+frame = 283
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="explode_sprite"]
+playback_speed = 8.0
+anims/explode = SubResource( 3 )
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="animation_finished" from="explode_sprite/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

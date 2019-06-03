@@ -1,23 +1,20 @@
 extends KinematicBody2D
 
 
-var SPEED = 150;
+var SPEED = 250;
 var dir = ''
-var isAction = false
 var motion = Vector2()
 
 func _ready():
 	pass
 
 func _physics_process(delta):
-	if isAction :
-		position += motion * SPEED * delta
-		
+	position += motion * SPEED * delta
+
 
 
 func start(point, _dir) :
 	dir = _dir;
-	isAction = true;
 	position = point
 	
 	if dir == 'up' :
@@ -38,3 +35,16 @@ func start(point, _dir) :
 		$Sprite.frame = 7
 	
 	print('START ', dir);
+
+
+func _on_Area2D_body_entered(body):
+	if body.name == 'walls': 
+		motion = Vector2()
+		$explode_sprite.visible = true;
+		$explode_sprite/AnimationPlayer.play("explode");
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	queue_free()
+	
+	
