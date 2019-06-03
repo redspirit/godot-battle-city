@@ -3,6 +3,8 @@ extends KinematicBody2D
 
 var SPEED = 80;
 
+var Bullet = preload("res://scenes/Bullet.tscn");
+
 func _physics_process(delta):
 
 	var motion = Vector2();
@@ -22,5 +24,7 @@ func _physics_process(delta):
 	else :
 		$anim.current_animation = ""
 		
+	if Input.is_action_just_pressed("ui_select") :
+		print("PRESSED")
 		
 	move_and_slide(motion * SPEED);

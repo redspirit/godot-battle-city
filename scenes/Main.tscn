@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Player.gd" type="Script" id=2]
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/Player.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 242, 10 )
@@ -37,6 +37,7 @@ position = Vector2( 470, 239 )
 shape = SubResource( 4 )
 
 [node name="back" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="gray_back" type="ColorRect" parent="back"]
 margin_right = 512.0
