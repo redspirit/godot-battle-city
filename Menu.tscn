@@ -1,0 +1,11 @@
+[gd_scene format=2]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+margin_left = 153.0
+margin_top = 164.0
+margin_right = 354.0
+margin_bottom = 242.0
+text = "MENU
+"
