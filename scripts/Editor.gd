@@ -5,23 +5,9 @@ extends Node2D
 var map
 var dataFileName = "map.txt"
 
+
 func _ready():
-	map = $TileMap
-
-	var file = File.new()
-	
-
-	if file.file_exists("res://maps/" + dataFileName) :
-		
-		file.open("res://maps/" + dataFileName, File.READ)
-		var data = JSON.parse(file.get_as_text())
-		file.close()
-		print(data)
-		
-	else :
-		
-		print("Map not found")
-
+	pass
 
 func _on_Button_pressed():
 	var data = []

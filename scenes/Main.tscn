@@ -39,6 +39,7 @@ position = Vector2( 471, 239 )
 shape = SubResource( 4 )
 
 [node name="back" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="gray_back" type="ColorRect" parent="back"]
 margin_right = 512.0
@@ -55,16 +56,20 @@ margin_right = 464.0
 margin_bottom = 464.0
 color = Color( 0, 0, 0, 1 )
 
-[node name="KinematicBody2D" parent="." instance=ExtResource( 2 )]
-position = Vector2( 189.093, 445.094 )
-script = ExtResource( 3 )
-
-[node name="bulletList" type="Node2D" parent="."]
-
 [node name="Button" type="Button" parent="."]
+visible = false
 margin_left = 470.0
 margin_top = 22.0
 margin_right = 505.0
 margin_bottom = 57.0
 text = "E"
+
+[node name="tiles" type="Node2D" parent="."]
+position = Vector2( 16, 16 )
+
+[node name="tank" parent="." instance=ExtResource( 2 )]
+position = Vector2( 189.093, 445.094 )
+script = ExtResource( 3 )
+
+[node name="bulletList" type="Node2D" parent="."]
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

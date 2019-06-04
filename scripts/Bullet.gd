@@ -38,7 +38,7 @@ func start(point, _dir) :
 
 
 func _on_Area2D_body_entered(body):
-	if body.name == 'walls': 
+	if body.name != 'bullet': 
 		motion = Vector2()
 		$explode_sprite.visible = true;
 		$explode_sprite/AnimationPlayer.play("explode");
