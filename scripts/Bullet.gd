@@ -33,15 +33,18 @@ func start(point, _dir) :
 		position.x += 20
 		motion = Vector2(1, 0);
 		$Sprite.frame = 7
-	
-	print('START ', dir);
 
 
 func _on_Area2D_body_entered(body):
-	if body.name != 'bullet': 
+	if body.name != 'bullet' && body.name != 'tank' : 
 		motion = Vector2()
 		$explode_sprite.visible = true;
 		$explode_sprite/AnimationPlayer.play("explode");
+
+
+	if body.get_parent().name == "brick":
+		body.get_parent().get_parent().explodeBrick(body)
+
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):

@@ -46,6 +46,8 @@ func _physics_process(delta):
 		
 		
 	move_and_slide(motion * SPEED);
+	
+	Global.tankPosition = global_position
 
 
 func dirChanged(oldDir, newDir) :
@@ -66,8 +68,10 @@ func dirChanged(oldDir, newDir) :
 	
 func snapToGrid(_dir) :
 	
-	position.x = round((position.x) / 8) * 8
-	position.y = round((position.y) / 8) * 8
+	var step = 8;
+	
+	position.x = round((position.x) / step) * step
+	position.y = round((position.y) / step) * step
 	
 	
 	

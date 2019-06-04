@@ -8,7 +8,7 @@
 extents = Vector2( 4, 4 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 3.94318, 4 )
+extents = Vector2( 6, 6 )
 
 [sub_resource type="Animation" id=3]
 resource_name = "explode"
