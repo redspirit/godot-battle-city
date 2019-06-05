@@ -21,9 +21,16 @@ func loadMap(fileName) :
 		file.close()
 		
 		for item in data.result:
-			var tile = FieldTile.instance()
-			tile.drawTile(item)
-			$tiles.add_child(tile)
+			if item[2] == 5 :		#eagle
+				$eagle.position.x = item[0] * 16 + 32
+				$eagle.position.y = item[1] * 16 + 32
+			elif item[2] == 6 :		#tank
+				$tank.position.x = item[0] * 16 + 32
+				$tank.position.y = item[1] * 16 + 32
+			else :
+				var tile = FieldTile.instance()
+				tile.drawTile(item)
+				$tiles.add_child(tile)
 		
 	else :
 		
