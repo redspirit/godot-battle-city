@@ -1,15 +1,12 @@
 extends Node2D
 
-
-
-var map
-var dataFileName = "map.txt"
-
+var dataFileName = "map2.txt"
 
 func _ready():
 	pass
 
 func _on_Button_pressed():
+	var map = $TileMap
 	var data = []
 	for point in map.get_used_cells():
 		data.append([point.x, point.y, map.get_cell(point.x, point.y)]);

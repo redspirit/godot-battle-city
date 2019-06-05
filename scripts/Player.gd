@@ -1,53 +1,88 @@
 extends KinematicBody2D
 
 
-var SPEED = 80;
-var dir = "";
+var SPEED = 80
+var dir = ""
+var inertia = 0
+var startForce = 1
+var isMoving = false
 
 var Bullet = preload("res://scenes/Bullet.tscn");
 
 func _ready():
 	dir = "up"
 
-var oldMotion = Vector2()
+var isOldMoving = false
+var motion = Vector2()
 
 func _physics_process(delta):
 
-	var motion = Vector2()
-	
 	if Input.is_action_pressed("ui_up"):
-		motion = Vector2(0, -1);
+		#motion = Vector2(0, -1);
+		motion.y += -startForce
+		motion.x = 0
+		if motion.y < -1 :
+			motion.y = -1
 		$anim.play("up")
 		dirChanged(dir, "up")
 		dir = "up"
+		isMoving = true
 	elif Input.is_action_pressed("ui_down"):
-		motion = Vector2(0, 1);
+		#motion = Vector2(0, 1);
+		motion.y += startForce
+		motion.x = 0
+		if motion.y > 1 :
+			motion.y = 1
 		$anim.play("down")
 		dirChanged(dir, "down")
 		dir = "down"
+		isMoving = true
 	elif Input.is_action_pressed("ui_left"):
-		motion = Vector2(-1, 0);
+		#motion = Vector2(-1, 0);
+		motion.x += -startForce
+		motion.y = 0
+		if motion.x < -1 :
+			motion.x = -1
 		$anim.play("left")
 		dirChanged(dir, "left")
 		dir = "left"
+		isMoving = true
 	elif Input.is_action_pressed("ui_right"):
-		motion = Vector2(1, 0);
+		#motion = Vector2(1, 0);
+		motion.x += startForce
+		motion.y = 0
+		if motion.x > 1 :
+			motion.x = 1
 		$anim.play("right")
 		dirChanged(dir, "right")
 		dir = "right"
+		isMoving = true
 	else :
 		$anim.stop()
+		isMoving = false
+		motion = motion * inertia
+		if motion.length() < 0.05 :
+			motion = Vector2()
 		
-	if(motion.length() != oldMotion.length()) :
-		if motion.x == 0 && motion.y == 0 :
-			changeMove(0)
-		else :
+		
+	if(isMoving != isOldMoving) :
+		if isMoving :
 			changeMove(1)
+		else :
+			changeMove(0)
 	
-	oldMotion = motion
+	isOldMoving = isMoving
+		
+	if isMoving :
+		if $area.get_overlapping_bodies().size() > 0 :
+			inertia = 0.95
+			startForce = 0.02
+		else :
+			inertia = 0
+			startForce = 1
+		
 		
 	if Input.is_action_just_pressed("ui_select") :
-		
 		if($"../bulletList".get_child_count() == 0) :
 			var bul = Bullet.instance()
 			bul.start(position, dir)
@@ -55,9 +90,9 @@ func _physics_process(delta):
 		
 		
 		
-		
-		
-	move_and_slide(motion * SPEED);
+	var res = move_and_slide(motion * SPEED);
+	motion = res / SPEED
+	
 	
 	Global.tankPosition = global_position
 
@@ -82,10 +117,7 @@ func snapToGrid(_dir) :
 	position = position.snapped(Vector2(step, step))
 	
 func changeMove(moving):
-	#print("MOVING ", moving)
-	var ices = $area.get_overlapping_bodies()
-	if ices.size() > 0 :
-		print('COLLL ', ices.size())
+	pass
 		
 		
 		

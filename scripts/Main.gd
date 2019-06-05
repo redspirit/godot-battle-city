@@ -5,7 +5,7 @@ func _on_Button_pressed():
 
 
 func _ready():
-	loadMap("map.txt")
+	loadMap("map2.txt")
 
 
 func loadMap(fileName) :
