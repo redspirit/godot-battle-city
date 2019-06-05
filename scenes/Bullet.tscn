@@ -8,7 +8,7 @@
 extents = Vector2( 4, 4 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 6, 6 )
+extents = Vector2( 7, 7 )
 
 [sub_resource type="Animation" id=3]
 resource_name = "explode"
@@ -40,6 +40,7 @@ hframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+disabled = true
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_mask = 3

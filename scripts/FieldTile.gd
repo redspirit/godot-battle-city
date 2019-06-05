@@ -63,25 +63,28 @@ func explodeBrick(body):
 	else :
 		line = "H"
 		
-		
-	print(line)
-		
 	if n == "DL" && line == "V" : 
-		$brick/DR.queue_free()
+		remove_node("DR")
 	if n == "DR" && line == "V": 
-		$brick/DL.queue_free()
+		remove_node("DL")
 	if n == "UL" && line == "V" : 
-		$brick/UR.queue_free()
+		remove_node("UR")
 	if n == "UR" && line == "V": 
-		$brick/UL.queue_free()
+		remove_node("UL")
 
 	if n == "DL" && line == "H" : 
-		$brick/UL.queue_free()
+		remove_node("UL")
 	if n == "UL" && line == "H": 
-		$brick/DL.queue_free()
+		remove_node("DL")
 	if n == "DR" && line == "H" : 
-		$brick/UR.queue_free()
+		remove_node("UR")
 	if n == "UR" && line == "H": 
-		$brick/DR.queue_free()
+		remove_node("DR")
 		
 	body.queue_free()
+	
+	
+func remove_node(name):
+	if $brick.has_node(name):
+		$brick.get_node(name).queue_free()
+	

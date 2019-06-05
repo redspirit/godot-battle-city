@@ -67,11 +67,8 @@ func dirChanged(oldDir, newDir) :
 	
 	
 func snapToGrid(_dir) :
-	
 	var step = 8;
-	
-	position.x = round((position.x) / step) * step
-	position.y = round((position.y) / step) * step
+	position = position.snapped(Vector2(step, step))
 	
 	
 	

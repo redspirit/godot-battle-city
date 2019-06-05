@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 
-var SPEED = 250;
+var SPEED = 300;
 var dir = ''
 var motion = Vector2()
 
