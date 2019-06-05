@@ -9,11 +9,11 @@ var indexToFrame = {
 }
 
 var colLayers = {
-	0: [3,0],
-	1: [0,0],
-	2: [0,0],
-	3: [3,0],
-	4: [4,0]
+	0: [3,0], # 1 1 0 0
+	1: [0,0], # 0 0 0 0
+	2: [8,0], # 0 0 0 1
+	3: [3,0], # 1 1 0 0
+	4: [4,0]  # 0 0 1 0
 }
 
 
@@ -39,8 +39,7 @@ func drawTile(tileData) :
 		z_index = 10
 	
 	if index == 3 :
-		#isBrick = true
-		
+
 		$sprite.visible = false
 		$collision.disabled = true
 		
