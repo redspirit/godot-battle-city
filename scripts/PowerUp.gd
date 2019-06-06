@@ -9,35 +9,41 @@ var states = {
 	"tank": 277 
 }
 
+var isFirstTick = true;
+var isStand = false
+var currentState = 0
+var lifeTime = 10 #seconds
+var timeElapsed = 0
+
 func _ready():
-	$sprite.visible = false
 	randomize()
-	randomSpawn()
+	currentState = int(rand_range(272, 277+1))
+	$sprite.visible = false
+	$sprite.frame = currentState
+	print("spawn ", currentState)
+	
 
 func _physics_process(delta):
-	print('>> ', get_overlapping_bodies().size())
 	
-
-func randomSpawn() :	
-	var index = int(rand_range(272, 277+1))
-	$sprite.frame = index
-	print("spawn ", index)
+	if isStand :
+		timeElapsed += delta
+		if timeElapsed > lifeTime :
+			queue_free()
+		return false;
 	
-	
-	
-	while (get_overlapping_bodies().size() > 0) :
+	if isFirstTick :
+		isFirstTick = false
+		return true
 		
-		var pos = Vector2(rand_range(32, 448), rand_range(32, 448)).snapped(Vector2(8, 8))
-		print(pos)
-		position = pos
+	if get_overlapping_bodies().size() > 0 :
+		position = Vector2(rand_range(32, 448), rand_range(32, 448)).snapped(Vector2(8, 8))
+	else :
+		isStand = true
+		$sprite.visible = true
+		connect("body_entered", self, "_on_PowerUp_body_entered")
 	
-	
-	$sprite.visible = true
-	
-	#connect("body_entered", self, "_on_PowerUp_body_entered")
-	
-
 
 func _on_PowerUp_body_entered(body):
-	#print("power up ", body.name)
-	pass
+	if body.name == "tank" :
+		print("power up ", currentState)
+		queue_free()
