@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://sprites/bc_0.png" type="Texture" id=2]
@@ -77,6 +77,23 @@ extents = Vector2( 14, 14 )
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 13.9926, 14 )
 
+[sub_resource type="Animation" id=7]
+resource_name = "spawn"
+length = 6.5
+step = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 258, 259, 260, 261, 260, 259, 258, 259, 260, 261, 260, 259, 258 ]
+}
+
 [node name="KinematicBody2D" type="KinematicBody2D"]
 collision_mask = 5
 script = ExtResource( 1 )
@@ -105,3 +122,15 @@ collision_mask = 8
 
 [node name="areaColl" type="CollisionShape2D" parent="area"]
 shape = SubResource( 6 )
+
+[node name="spawnSprite" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+vframes = 18
+hframes = 16
+frame = 258
+
+[node name="anim" type="AnimationPlayer" parent="spawnSprite"]
+playback_speed = 5.0
+anims/spawn = SubResource( 7 )
+[connection signal="animation_finished" from="spawnSprite/anim" to="." method="_on_anim_animation_finished"]

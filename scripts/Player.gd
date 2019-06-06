@@ -6,11 +6,15 @@ var dir = ""
 var inertia = 0
 var startForce = 1
 var isMoving = false
+var canMove = false
 
 var Bullet = preload("res://scenes/Bullet.tscn");
 
 func _ready():
 	dir = "up"
+	$sprite.visible = false
+	$spawnSprite.visible = true
+	$spawnSprite/anim.play("spawn")
 
 var isOldMoving = false
 var motion = Vector2()
@@ -64,6 +68,8 @@ func _physics_process(delta):
 		if motion.length() < 0.05 :
 			motion = Vector2()
 		
+	if !canMove :
+		motion = Vector2()
 		
 	if(isMoving != isOldMoving) :
 		if isMoving :
@@ -121,4 +127,8 @@ func changeMove(moving):
 		
 		
 		
-			
+# SPAWN ANIMATION		
+func _on_anim_animation_finished(anim_name):
+	$sprite.visible = true
+	$spawnSprite.visible = false
+	canMove = true
