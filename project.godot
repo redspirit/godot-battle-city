@@ -25,7 +25,7 @@ Global="*res://scripts/Global.gd"
 
 [display]
 
-window/size/width=512
+window/size/width=530
 window/size/height=480
 window/size/resizable=false
 

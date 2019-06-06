@@ -22,8 +22,8 @@ func loadMap(fileName) :
 		
 		for item in data.result:
 			if item[2] == 5 :		#eagle
-				$eagle.position.x = item[0] * 16 + 32
-				$eagle.position.y = item[1] * 16 + 32
+				$Eagle.position.x = item[0] * 16 + 32
+				$Eagle.position.y = item[1] * 16 + 32
 			elif item[2] == 6 :		#tank
 				$tank.position.x = item[0] * 16 + 32
 				$tank.position.y = item[1] * 16 + 32

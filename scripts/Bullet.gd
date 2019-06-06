@@ -39,7 +39,7 @@ func _on_Area2D_body_entered(body):
 	if body.name != 'bullet' && body.name != 'tank' : 
 		motion = Vector2()
 		$explode_sprite.visible = true;
-		$explode_sprite/AnimationPlayer.play("explode");
+		$explode_sprite/anim.play("explode");
 
 
 	if body.get_parent().name == "brick":

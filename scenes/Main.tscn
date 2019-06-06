@@ -1,8 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/Main.gd" type="Script" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://sprites/bc_0.png" type="Texture" id=3]
+[ext_resource path="res://scenes/Eagle.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 242, 8 )
@@ -15,9 +15,6 @@ extents = Vector2( 241, 8 )
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 7, 232 )
-
-[sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 16, 16 )
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
@@ -42,10 +39,9 @@ position = Vector2( 471, 239 )
 shape = SubResource( 4 )
 
 [node name="back" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="gray_back" type="ColorRect" parent="back"]
-margin_right = 512.0
+margin_right = 531.0
 margin_bottom = 480.0
 color = Color( 0.623529, 0.623529, 0.623529, 1 )
 __meta__ = {
@@ -74,15 +70,6 @@ position = Vector2( 110, 289 )
 
 [node name="bulletList" type="Node2D" parent="."]
 
-[node name="eagle" type="Area2D" parent="."]
-
-[node name="call" type="CollisionShape2D" parent="eagle"]
-shape = SubResource( 5 )
-
-[node name="Sprite" type="Sprite" parent="eagle"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 3 )
-vframes = 18
-hframes = 16
-frame = 256
+[node name="Eagle" parent="." instance=ExtResource( 3 )]
+position = Vector2( 188, 157 )
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
