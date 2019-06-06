@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/Main.gd" type="Script" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/Eagle.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/PowerUp.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 242, 8 )
@@ -73,4 +74,7 @@ position = Vector2( 110, 289 )
 
 [node name="Eagle" parent="." instance=ExtResource( 3 )]
 position = Vector2( 145, 289 )
+
+[node name="PowerUp" parent="." instance=ExtResource( 4 )]
+position = Vector2( 66, 57 )
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
