@@ -15,7 +15,7 @@ func _ready():
 	$sprite.visible = false
 	$spawnSprite.visible = true
 	$spawnSprite/anim.play("spawn")
-
+	
 var isOldMoving = false
 var motion = Vector2()
 
@@ -27,7 +27,6 @@ func _physics_process(delta):
 		motion.x = 0
 		if motion.y < -1 :
 			motion.y = -1
-		$anim.play("up")
 		dirChanged(dir, "up")
 		dir = "up"
 		isMoving = true
@@ -37,7 +36,6 @@ func _physics_process(delta):
 		motion.x = 0
 		if motion.y > 1 :
 			motion.y = 1
-		$anim.play("down")
 		dirChanged(dir, "down")
 		dir = "down"
 		isMoving = true
@@ -47,7 +45,6 @@ func _physics_process(delta):
 		motion.y = 0
 		if motion.x < -1 :
 			motion.x = -1
-		$anim.play("left")
 		dirChanged(dir, "left")
 		dir = "left"
 		isMoving = true
@@ -57,7 +54,6 @@ func _physics_process(delta):
 		motion.y = 0
 		if motion.x > 1 :
 			motion.x = 1
-		$anim.play("right")
 		dirChanged(dir, "right")
 		dir = "right"
 		isMoving = true
@@ -105,6 +101,8 @@ func _physics_process(delta):
 
 func dirChanged(oldDir, newDir) :
 	
+	$anim.play(newDir)
+	
 	if (oldDir == "up" || oldDir == "down") && newDir == "right":
 		snapToGrid("right")
 	
@@ -122,13 +120,28 @@ func snapToGrid(_dir) :
 	var step = 8;
 	position = position.snapped(Vector2(step, step))
 	
-func changeMove(moving):
+func changeMove(isMovie) :
+#	if isMovie :
+#		$anim.play(dir)
+#	else :
+#		$anim.stop()
 	pass
+	
+func setSkin(num) :
+	for animName in $anim.get_animation_list():
+		var anim = $anim.get_animation(animName)
+		anim.track_set_enabled(0, false)
+		anim.track_set_enabled(1, false)
+		anim.track_set_enabled(2, false)
+		anim.track_set_enabled(3, false)
+		anim.track_set_enabled(num - 1, true)
 		
-		
-		
-# SPAWN ANIMATION		
+	$sprite.frame =  $anim.get_animation(dir).track_get_key_value(num - 1, 0)
+
+
+# SPAWN ANIMATION
 func _on_anim_animation_finished(anim_name):
 	$sprite.visible = true
 	$spawnSprite.visible = false
 	canMove = true
+	setSkin(2)

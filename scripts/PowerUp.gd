@@ -1,12 +1,14 @@
 extends Area2D
 
-var states = {
-	"kaska": 272,
-	"clock": 273,
-	"shovel": 274,
-	"star": 275,
-	"granade": 276,
-	"tank": 277 
+signal catchPowerUp(name)
+
+var names = {
+	272: "helmet",		#временное силовое поле, неуязвимость
+	273: "timer",		#замораживает врагов
+	274: "shovel",		#окапывает штаб бронью
+	275: "star",		#повышение ранга
+	276: "granade",		#убивает всех врагов
+	277: "tank" 		#+1 жизнь
 }
 
 var isFirstTick = true;
@@ -20,8 +22,7 @@ func _ready():
 	currentState = int(rand_range(272, 277+1))
 	$sprite.visible = false
 	$sprite.frame = currentState
-	print("spawn ", currentState)
-	
+
 
 func _physics_process(delta):
 	
@@ -46,5 +47,5 @@ func _physics_process(delta):
 
 func _on_PowerUp_body_entered(body):
 	if body.name == "tank" :
-		print("power up ", currentState)
+		emit_signal("catchPowerUp", names[currentState])
 		queue_free()

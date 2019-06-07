@@ -1,12 +1,27 @@
 extends Node2D
 
+
+var PowerUp = preload("res://scenes/PowerUp.tscn")
+var Enemy = preload("res://scenes/Enemy.tscn")
+
+
 func _on_Button_pressed():
 	get_tree().change_scene("res://scenes/Editor.tscn")
 
 
 func _ready():
 	loadMap("map2.txt")
+	spawnEnemy()
+	
 
+func spawnEnemy():
+	var enemy = Enemy.instance()
+	$enemies.add_child(enemy)
+	enemy.connect("enemyKilled", self, "_on_EnemyKilled")
+	
+func _on_EnemyKilled():
+	print('_on_EnemyKilled')
+	spawnEnemy()
 
 func loadMap(fileName) :
 	
@@ -36,3 +51,15 @@ func loadMap(fileName) :
 		
 		print("Map not found")
 
+
+
+func _on_Eagle_fortressDestroyed():
+	print("RUN GAME OVER")
+	
+	var pu = PowerUp.instance()
+	$powerups.add_child(pu)
+	pu.connect("catchPowerUp", self, "_on_catchPowerUp")
+	
+	
+func _on_catchPowerUp(name) :
+	print("_on_catchPowerUp ", name)
