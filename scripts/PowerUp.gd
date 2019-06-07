@@ -40,6 +40,7 @@ func _physics_process(delta):
 	else :
 		isStand = true
 		$sprite.visible = true
+		$sprite/anim.play("blink")
 		connect("body_entered", self, "_on_PowerUp_body_entered")
 	
 
