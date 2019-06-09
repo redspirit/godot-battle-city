@@ -6,12 +6,13 @@ var Enemy = preload("res://scenes/Enemy.tscn")
 
 
 func _on_Button_pressed():
-	get_tree().change_scene("res://scenes/Editor.tscn")
+	#get_tree().change_scene("res://scenes/Editor.tscn")
+	spawnEnemy()
 
 
 func _ready():
 	loadMap("map2.txt")
-	spawnEnemy()
+
 	
 
 func spawnEnemy():

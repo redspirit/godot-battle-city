@@ -56,7 +56,6 @@ margin_bottom = 464.0
 color = Color( 0, 0, 0, 1 )
 
 [node name="Button" type="Button" parent="."]
-visible = false
 margin_left = 470.0
 margin_top = 22.0
 margin_right = 505.0
@@ -79,5 +78,12 @@ position = Vector2( 16, 16 )
 
 [node name="enemies" type="Node2D" parent="."]
 position = Vector2( 16, 16 )
+
+[node name="LineEdit" type="LineEdit" parent="."]
+visible = false
+margin_left = 473.0
+margin_top = 70.0
+margin_right = 675.0
+margin_bottom = 96.0
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
 [connection signal="fortressDestroyed" from="Eagle" to="." method="_on_Eagle_fortressDestroyed"]
