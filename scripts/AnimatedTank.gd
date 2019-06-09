@@ -27,9 +27,9 @@ func onFrame() :
 	if frameIndex > 1 :
 		frameIndex = 0
 		
-	frame = frameSet[frameIndex] + skinOffset + (tank_type * 72)
-	#print(frame)
+	set_frame(frameSet[frameIndex] + skinOffset + (tank_type * 72))
 
+var oldDir = "";
 
 func playDirection(dir): 
 	
@@ -42,11 +42,11 @@ func playDirection(dir):
 	elif dir == "right" :
 		frameSet = [6, 7]
 
-
-	if !isPlay :
+	if oldDir != dir :
 		onFrame()
 
 	isPlay = true
+	oldDir = dir;
 
 
 func setSkin(num): 

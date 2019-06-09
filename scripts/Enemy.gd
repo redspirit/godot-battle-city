@@ -30,7 +30,7 @@ func setDir() :
 	if dir == "right":
 		motion = Vector2(1, 0)
 		
-	$Timer.start()
+	$movieTimer.start()
 
 
 func _physics_process(delta):
@@ -66,12 +66,12 @@ func _on_anim_animation_finished(anim_name):
 
 # ловим пулю
 func _on_Area2D_area_entered(area):
-	if area.name == "bulletArea" :
+	if area.name == "bulletArea" && area.get_parent().get("isPlayerBullet"):
 		$sprite.visible = false
 		$explode.visible = true
 		$explode/anim.play("explode")
 		motion = Vector2()
-		$Timer.stop()
+		$movieTimer.stop()
 
 func _on_explode_animation_finished(anim_name):
 	emit_signal("enemyKilled")
@@ -79,8 +79,11 @@ func _on_explode_animation_finished(anim_name):
 
 
 func _on_Timer_timeout():
-	#var bul = Bullet.instance()
-	#bul.start(position, dir)
-	#$"../../bulletList".add_child(bul)
+	set_position( position.snapped(Vector2(8, 8)) )
 	setDir()
 
+
+func _on_shotTimer_timeout():
+	var bul = Bullet.instance()
+	bul.start(get_position(), dir, false)
+	$"../../bulletList".add_child(bul)

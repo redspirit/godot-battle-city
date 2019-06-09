@@ -111,7 +111,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("ui_select") :
 		if($"../bulletList".get_child_count() == 0) :
 			var bul = Bullet.instance()
-			bul.start(position, dir)
+			bul.start(get_position(), dir, true)
 			$"../bulletList".add_child(bul)
 		
 		
@@ -120,7 +120,7 @@ func _physics_process(delta):
 	motion = res / SPEED
 	
 	
-	Global.tankPosition = global_position
+	Global.tankPosition = get_position()
 
 
 func dirChanged(oldDir, newDir) :
@@ -141,7 +141,7 @@ func dirChanged(oldDir, newDir) :
 	
 func snapToGrid() :
 	var step = 8;
-	position = position.snapped(Vector2(step, step))
+	set_position( position.snapped(Vector2(step, step)) )
 	
 func changeMove(isMovie) :
 #	if isMovie :
@@ -172,3 +172,13 @@ func _on_anim_animation_finished(anim_name):
 
 func _on_shield_animation_finished(anim_name):
 	$shield.visible = false
+
+
+func _on_area_area_entered(area):
+	if area.name == "bulletArea":
+		#$sprite.visible = false
+		#$explode.visible = true
+		#$explode/anim.play("explode")
+		#motion = Vector2()
+		#$movieTimer.stop()
+		print("BAH!")

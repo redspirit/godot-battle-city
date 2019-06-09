@@ -9,11 +9,11 @@ var indexToFrame = {
 }
 
 var colLayers = {
-	0: [3,0], # 1 1 0 0
-	1: [0,0], # 0 0 0 0
-	2: [8,0], # 0 0 0 1
-	3: [3,0], # 1 1 0 0
-	4: [4,0]  # 0 0 1 0
+	0: [0,15],
+	1: [0,0],
+	2: [0,0],
+	3: [0,15],
+	4: [0,5] 
 }
 
 
@@ -47,6 +47,7 @@ func drawTile(tileData) :
 		
 		for node in $brick.get_children():
 			node.get_node("coll").disabled = false
+
 
 func explodeBrick(body):
 	var n = body.name

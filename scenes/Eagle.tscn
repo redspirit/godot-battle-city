@@ -26,6 +26,7 @@ tracks/0/keys = {
 }
 
 [node name="Eagle" type="KinematicBody2D"]
+collision_layer = 0
 collision_mask = 0
 script = ExtResource( 1 )
 
@@ -36,7 +37,7 @@ shape = SubResource( 1 )
 input_pickable = false
 monitorable = false
 collision_layer = 0
-collision_mask = 16
+collision_mask = 10
 
 [node name="coll" type="CollisionShape2D" parent="eagleArea"]
 shape = SubResource( 2 )

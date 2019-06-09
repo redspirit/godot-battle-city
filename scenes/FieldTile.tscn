@@ -36,7 +36,7 @@ extents = Vector2( 4, 4 )
 extents = Vector2( 4, 4 )
 
 [node name="FieldTile" type="KinematicBody2D"]
-collision_layer = 3
+collision_layer = 15
 collision_mask = 0
 script = ExtResource( 1 )
 
@@ -59,8 +59,9 @@ editor/display_folded = true
 visible = false
 
 [node name="UL" type="KinematicBody2D" parent="brick"]
-collision_layer = 3
-collision_mask = 0
+editor/display_folded = true
+collision_layer = 0
+collision_mask = 15
 
 [node name="coll" type="CollisionShape2D" parent="brick/UL"]
 position = Vector2( -4, -4 )
@@ -75,8 +76,9 @@ region_enabled = true
 region_rect = Rect2( 40, 0, 4, 4 )
 
 [node name="UR" type="KinematicBody2D" parent="brick"]
-collision_layer = 3
-collision_mask = 0
+editor/display_folded = true
+collision_layer = 0
+collision_mask = 15
 
 [node name="coll" type="CollisionShape2D" parent="brick/UR"]
 position = Vector2( 4, -4 )
@@ -91,8 +93,9 @@ region_enabled = true
 region_rect = Rect2( 44, 0, 4, 4 )
 
 [node name="DL" type="KinematicBody2D" parent="brick"]
-collision_layer = 3
-collision_mask = 0
+editor/display_folded = true
+collision_layer = 0
+collision_mask = 15
 
 [node name="coll" type="CollisionShape2D" parent="brick/DL"]
 position = Vector2( -4, 4 )
@@ -107,8 +110,9 @@ region_enabled = true
 region_rect = Rect2( 44, 0, 4, 4 )
 
 [node name="DR" type="KinematicBody2D" parent="brick"]
-collision_layer = 3
-collision_mask = 0
+editor/display_folded = true
+collision_layer = 0
+collision_mask = 15
 
 [node name="coll" type="CollisionShape2D" parent="brick/DR"]
 position = Vector2( 4, 4 )
