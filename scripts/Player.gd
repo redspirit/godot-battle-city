@@ -109,9 +109,10 @@ func _physics_process(delta):
 		
 		
 	if Input.is_action_just_pressed("ui_select") :
-		if($"../bulletList".get_child_count() == 0) :
+		
+		if get_tree().get_nodes_in_group("player").size() == 0 :
 			var bul = Bullet.instance()
-			bul.start(get_position(), dir, true)
+			bul.shoot(get_position(), dir, true)
 			$"../bulletList".add_child(bul)
 		
 		

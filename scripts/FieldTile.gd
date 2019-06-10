@@ -49,9 +49,9 @@ func drawTile(tileData) :
 			node.get_node("coll").disabled = false
 
 
-func explodeBrick(body):
+func explodeBrick(body, startPoint):
 	var n = body.name
-	var angle = Global.tankPosition.angle_to_point(body.get_parent().global_position) * 57.295
+	var angle = startPoint.angle_to_point(body.get_parent().get_global_position()) * 57.295
 
 	var line = ""
 	if angle > -45 && angle < 45:
