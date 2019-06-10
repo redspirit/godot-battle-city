@@ -58,13 +58,6 @@ margin_right = 464.0
 margin_bottom = 464.0
 color = Color( 0, 0, 0, 1 )
 
-[node name="Button" type="Button" parent="."]
-margin_left = 470.0
-margin_top = 22.0
-margin_right = 505.0
-margin_bottom = 57.0
-text = "E"
-
 [node name="tiles" type="Node2D" parent="."]
 position = Vector2( 16, 16 )
 
@@ -83,10 +76,49 @@ position = Vector2( 16, 16 )
 
 [node name="enemies" type="Node2D" parent="."]
 
-[node name="LineEdit" type="LineEdit" parent="."]
+[node name="UI" type="Node2D" parent="."]
+editor/display_folded = true
+
+[node name="TestButton" type="Button" parent="UI"]
 margin_left = 473.0
-margin_top = 70.0
-margin_right = 675.0
-margin_bottom = 96.0
-[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+margin_top = 427.0
+margin_right = 508.0
+margin_bottom = 462.0
+focus_mode = 0
+shortcut_in_tooltip = false
+enabled_focus_mode = 0
+text = "E"
+
+[node name="Label" type="Label" parent="UI"]
+margin_left = 466.0
+margin_top = 20.0
+margin_right = 533.0
+margin_bottom = 39.0
+text = "Enm:"
+align = 1
+
+[node name="Label2" type="Label" parent="UI"]
+margin_left = 465.0
+margin_top = 371.0
+margin_right = 529.0
+margin_bottom = 389.0
+text = "Lvs:"
+align = 1
+
+[node name="livesLabel" type="Label" parent="UI"]
+margin_left = 474.0
+margin_top = 396.0
+margin_right = 514.0
+margin_bottom = 412.0
+text = "3"
+align = 1
+
+[node name="EnemiesLabel" type="Label" parent="UI"]
+margin_left = 465.0
+margin_top = 46.0
+margin_right = 529.0
+margin_bottom = 62.0
+text = "20"
+align = 1
 [connection signal="fortressDestroyed" from="Eagle" to="." method="_on_Eagle_fortressDestroyed"]
+[connection signal="pressed" from="UI/TestButton" to="." method="_on_Button_pressed"]

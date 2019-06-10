@@ -97,7 +97,7 @@ shape = SubResource( 4 )
 wait_time = 2.0
 
 [node name="shotTimer" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 2.0
 [connection signal="animation_finished" from="spawnSprite/anim" to="." method="_on_anim_animation_finished"]
 [connection signal="animation_finished" from="explode/anim" to="." method="_on_explode_animation_finished"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
