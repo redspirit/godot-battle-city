@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+signal playerKilled
 
 var SPEED = 80
 var dir = ""
@@ -18,12 +19,7 @@ var tier = 1
 var Bullet = preload("res://scenes/Bullet.tscn");
 
 func _ready():
-	dir = "up"
-	$sprite.visible = false
-	$spawnSprite.visible = true
-	$spawnSprite/anim.play("spawn")
-	$sprite.setSkin(2)
-	
+	visible = false
 	
 var isOldMoving = false
 var motion = Vector2()
@@ -163,6 +159,16 @@ func setShield(state, timeout):
 		$shield.visible = false
 		$shield/anim.stop()
 
+func respawn(startPos):
+	position.x = startPos.x
+	position.y = startPos.y
+	dir = "up"
+	visible = true
+	$sprite.visible = false
+	$spawnSprite.visible = true
+	$spawnSprite/anim.play("spawn")
+	$sprite.setSkin(2)
+
 # SPAWN ANIMATION
 func _on_anim_animation_finished(anim_name):
 	$sprite.visible = true
@@ -177,9 +183,12 @@ func _on_shield_animation_finished(anim_name):
 
 func _on_area_area_entered(area):
 	if area.name == "bulletArea":
-		#$sprite.visible = false
-		#$explode.visible = true
-		#$explode/anim.play("explode")
-		#motion = Vector2()
-		#$movieTimer.stop()
-		print("BAH!")
+		$sprite.visible = false
+		$explode.visible = true
+		$explode/anim.play("explode")
+		canMove = false
+
+#конец анимации взрыва - уничтожаем игрока
+func _on_explode_animation_finished(anim_name):
+	$explode.visible = false
+	emit_signal("playerKilled")

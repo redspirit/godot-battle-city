@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://sprites/bc_0.png" type="Texture" id=2]
@@ -44,6 +44,22 @@ tracks/0/keys = {
 "values": [ 262, 263 ]
 }
 
+[sub_resource type="Animation" id=5]
+resource_name = "explode"
+step = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 70, 71 ]
+}
+
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 0
 collision_mask = 0
@@ -70,6 +86,7 @@ collision_mask = 8
 shape = SubResource( 2 )
 
 [node name="spawnSprite" type="Sprite" parent="."]
+editor/display_folded = true
 visible = false
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
@@ -82,6 +99,7 @@ playback_speed = 5.0
 anims/spawn = SubResource( 3 )
 
 [node name="shield" type="Sprite" parent="."]
+editor/display_folded = true
 visible = false
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
@@ -92,5 +110,19 @@ frame = 262
 [node name="anim" type="AnimationPlayer" parent="shield"]
 playback_speed = 7.0
 anims/active = SubResource( 4 )
+
+[node name="explode" type="Sprite" parent="."]
+editor/display_folded = true
+visible = false
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+vframes = 9
+hframes = 8
+frame = 70
+
+[node name="anim" type="AnimationPlayer" parent="explode"]
+playback_speed = 3.0
+anims/explode = SubResource( 5 )
 [connection signal="area_entered" from="area" to="." method="_on_area_area_entered"]
 [connection signal="animation_finished" from="spawnSprite/anim" to="." method="_on_anim_animation_finished"]
+[connection signal="animation_finished" from="explode/anim" to="." method="_on_explode_animation_finished"]

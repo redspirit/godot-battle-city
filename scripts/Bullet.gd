@@ -65,6 +65,15 @@ func _on_Area2D_body_entered(body):
 	if !isPlayerBullet && !body.get("isEnemy") :
 		explode()
 
+
 func _on_AnimationPlayer_animation_finished(anim_name):
 	queue_free()
 	
+
+# ловим попадание пули в пулю
+func _on_bulletArea_area_entered(area):
+	if area.name == "bulletArea":
+		if area.get_parent().get("isPlayerBullet") && !isPlayerBullet:
+			explode()
+		if !area.get_parent().get("isPlayerBullet") && isPlayerBullet:
+			explode()

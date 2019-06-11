@@ -3,7 +3,9 @@ extends Node2D
 
 var PowerUp = preload("res://scenes/PowerUp.tscn")
 var Enemy = preload("res://scenes/Enemy.tscn")
+var tankPos = Vector2()
 
+var lives = 3
 
 func _on_Button_pressed():
 	#get_tree().change_scene("res://scenes/Editor.tscn")
@@ -12,8 +14,9 @@ func _on_Button_pressed():
 
 func _ready():
 	loadMap("map2.txt")
+	$tank.connect("playerKilled", self, "_on_PlayerKilled")
+	$UI/livesLabel.text = str(lives)
 
-	
 
 func spawnEnemy():
 	var enemy = Enemy.instance()
@@ -23,6 +26,16 @@ func spawnEnemy():
 func _on_EnemyKilled():
 	print('_on_EnemyKilled')
 	spawnEnemy()
+	
+func _on_PlayerKilled():
+	lives -= 1
+	$UI/livesLabel.text = str(lives)
+	if lives == 0:
+		print("GAME OVER")
+		$tank.queue_free()
+	else :
+		$tank.respawn(tankPos)
+	
 
 func loadMap(fileName) :
 	
@@ -41,12 +54,14 @@ func loadMap(fileName) :
 				$Eagle.position.x = item[0] * 16 + 32
 				$Eagle.position.y = item[1] * 16 + 32
 			elif item[2] == 6 :		#tank
-				$tank.position.x = item[0] * 16 + 32
-				$tank.position.y = item[1] * 16 + 32
+				tankPos.x = item[0] * 16 + 32
+				tankPos.y = item[1] * 16 + 32
 			else :
 				var tile = FieldTile.instance()
 				tile.drawTile(item)
 				$tiles.add_child(tile)
+		
+		$tank.respawn(tankPos)
 		
 	else :
 		

@@ -62,6 +62,7 @@ tank_type = 1
 walk_interval = 0.1
 
 [node name="spawnSprite" type="Sprite" parent="."]
+editor/display_folded = true
 visible = false
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
@@ -74,7 +75,6 @@ playback_speed = 5.0
 anims/spawn = SubResource( 2 )
 
 [node name="explode" type="Sprite" parent="."]
-editor/display_folded = true
 visible = false
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
@@ -87,6 +87,7 @@ playback_speed = 3.0
 anims/explode = SubResource( 3 )
 
 [node name="Area2D" type="Area2D" parent="."]
+editor/display_folded = true
 collision_layer = 15
 collision_mask = 15
 
@@ -97,7 +98,6 @@ shape = SubResource( 4 )
 wait_time = 2.0
 
 [node name="shotTimer" type="Timer" parent="."]
-wait_time = 2.0
 [connection signal="animation_finished" from="spawnSprite/anim" to="." method="_on_anim_animation_finished"]
 [connection signal="animation_finished" from="explode/anim" to="." method="_on_explode_animation_finished"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
