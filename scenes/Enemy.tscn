@@ -87,7 +87,6 @@ playback_speed = 3.0
 anims/explode = SubResource( 3 )
 
 [node name="Area2D" type="Area2D" parent="."]
-editor/display_folded = true
 collision_layer = 15
 collision_mask = 15
 

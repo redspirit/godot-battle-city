@@ -77,7 +77,6 @@ script = ExtResource( 3 )
 walk_interval = 0.1
 
 [node name="area" type="Area2D" parent="."]
-editor/display_folded = true
 monitorable = false
 collision_layer = 0
 collision_mask = 8

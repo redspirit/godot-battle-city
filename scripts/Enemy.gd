@@ -4,7 +4,6 @@ signal enemyKilled
 
 var isEnemy = true
 var isFirstTick = true;
-var isStand = false
 var isSpawned = false
 var motion = Vector2()
 var SPEED = 50
@@ -14,8 +13,10 @@ var Bullet = preload("res://scenes/Bullet.tscn");
 
 func _ready():
 	randomize()
+	$Area2D/coll.disabled = true
 	$sprite.visible = false
-	$spawnSprite.visible = false
+	$spawnSprite.visible = true
+	$spawnSprite/anim.play("spawn")
 	
 func setDir() :
 	dir = ["up", "left", "right", "down"][int(rand_range(0, 4))];
@@ -39,19 +40,6 @@ func _physics_process(delta):
 	if isSpawned && offset.length() == 0 && motion.length() > 0:
 		setDir()
 	
-	if isStand :
-		return false
-		
-	if isFirstTick :
-		isFirstTick = false
-		return true
-
-	if $Area2D.get_overlapping_bodies().size() > 0 :
-		set_position( Vector2(rand_range(32, 448), rand_range(32, 448)).snapped(Vector2(16, 16)) )
-	else :
-		isStand = true
-		$spawnSprite.visible = true
-		$spawnSprite/anim.play("spawn")
 
 
 # анимация спавна кончается
@@ -62,6 +50,7 @@ func _on_anim_animation_finished(anim_name):
 	$sprite.setSkin(int(rand_range(1, 5)))
 	isSpawned = true
 	$shotTimer.start()
+	$Area2D/coll.disabled = false
 
 
 # ловим пулю

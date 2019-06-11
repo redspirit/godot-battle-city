@@ -1,14 +1,26 @@
 extends Node2D
 
-
 var PowerUp = preload("res://scenes/PowerUp.tscn")
 var Enemy = preload("res://scenes/Enemy.tscn")
 var tankPos = Vector2()
 
 var lives = 3
+var enimiesPositionsStack = [
+	0, 208, 416,
+	0, 208, 416,
+#	0, 208, 416,
+#	0, 208, 416,
+#	0, 208, 416,
+#	0, 208, 416,
+#	0, 208
+]
+var livingEnemies = enimiesPositionsStack.size()
+
 
 func _on_Button_pressed():
 	#get_tree().change_scene("res://scenes/Editor.tscn")
+	spawnEnemy()
+	spawnEnemy()
 	spawnEnemy()
 
 
@@ -16,16 +28,28 @@ func _ready():
 	loadMap("map2.txt")
 	$tank.connect("playerKilled", self, "_on_PlayerKilled")
 	$UI/livesLabel.text = str(lives)
-
+	$UI/EnemiesLabel.text = str(livingEnemies)
+	
 
 func spawnEnemy():
+	
 	var enemy = Enemy.instance()
 	$enemies.add_child(enemy)
+	var offset = enimiesPositionsStack.pop_front()
+	enemy.set_position(Vector2(16 + 16 + offset, 16 + 16))
 	enemy.connect("enemyKilled", self, "_on_EnemyKilled")
 	
+	
 func _on_EnemyKilled():
-	print('_on_EnemyKilled')
-	spawnEnemy()
+	livingEnemies -= 1
+	$UI/EnemiesLabel.text = str(livingEnemies)
+	
+	if enimiesPositionsStack.size() > 0 :
+		spawnEnemy()
+		
+	if livingEnemies == 0 :
+		print("VICTORY")
+		
 	
 func _on_PlayerKilled():
 	lives -= 1

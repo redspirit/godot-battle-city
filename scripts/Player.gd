@@ -168,6 +168,7 @@ func respawn(startPos):
 	$spawnSprite.visible = true
 	$spawnSprite/anim.play("spawn")
 	$sprite.setSkin(2)
+	$area/areaColl.disabled = true
 
 # SPAWN ANIMATION
 func _on_anim_animation_finished(anim_name):
@@ -175,6 +176,7 @@ func _on_anim_animation_finished(anim_name):
 	$spawnSprite.visible = false
 	canMove = true
 	setShield(true, 2)
+	$area/areaColl.disabled = false
 
 
 func _on_shield_animation_finished(anim_name):

@@ -1,11 +1,136 @@
-[gd_scene format=2]
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://sprites/fire/fire_1.png" type="Texture" id=1]
+[ext_resource path="res://sprites/fire/fire_2.png" type="Texture" id=2]
+[ext_resource path="res://sprites/fire/fire_3.png" type="Texture" id=3]
+[ext_resource path="res://sprites/fire/fire_4.png" type="Texture" id=4]
+[ext_resource path="res://sprites/movie/movie_1.png" type="Texture" id=5]
+[ext_resource path="res://sprites/movie/movie_2.png" type="Texture" id=6]
+[ext_resource path="res://sprites/movie/movie_3.png" type="Texture" id=7]
+[ext_resource path="res://sprites/movie/movie_4.png" type="Texture" id=8]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 1 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=2]
+resource_name = "fire"
+length = 2.5
+step = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 0 ]
+}
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=4]
+resource_name = "move"
+length = 2.0
+loop = true
+step = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Label" type="Label" parent="."]
-margin_left = 153.0
-margin_top = 164.0
-margin_right = 354.0
-margin_bottom = 242.0
-text = "MENU
-"
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -6.0
+margin_top = -4.0
+margin_right = 545.0
+margin_bottom = 489.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="TextMenu" type="Node2D" parent="."]
+position = Vector2( 249, 232 )
+
+[node name="Label" type="Label" parent="TextMenu"]
+margin_top = 19.0
+margin_right = 184.0
+margin_bottom = 37.0
+text = "НОВАЯ ИГРА"
+
+[node name="Label2" type="Label" parent="TextMenu"]
+margin_top = 57.0
+margin_right = 184.0
+margin_bottom = 73.0
+text = "ПРОДОЛЖИТЬ"
+
+[node name="Label3" type="Label" parent="TextMenu"]
+margin_top = 92.0
+margin_right = 140.0
+margin_bottom = 108.0
+text = "ВЫЙТИ"
+
+[node name="CopyText" type="Node2D" parent="."]
+position = Vector2( 4, 390 )
+
+[node name="Label" type="Label" parent="CopyText"]
+margin_left = 7.0
+margin_top = 26.0
+margin_right = 512.0
+margin_bottom = 95.0
+text = "(C) 1980 NAMCO LTD.
+CLONE BY REDSPIRIT 2019
+POWERED BY GODOT 2D"
+align = 1
+
+[node name="Tank" type="Node2D" parent="."]
+position = Vector2( 129, 243 )
+
+[node name="fireSprite" type="AnimatedSprite" parent="Tank"]
+editor/display_folded = true
+position = Vector2( 97, 23 )
+scale = Vector2( 0.867316, 0.867316 )
+frames = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="anim" type="AnimationPlayer" parent="Tank/fireSprite"]
+playback_speed = 5.0
+anims/fire = SubResource( 2 )
+
+[node name="movieSprite" type="AnimatedSprite" parent="Tank"]
+editor/display_folded = true
+position = Vector2( 41, 21 )
+scale = Vector2( 0.470223, 0.470223 )
+frames = SubResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="anim" type="AnimationPlayer" parent="Tank/movieSprite"]
+playback_speed = 4.0
+anims/move = SubResource( 4 )
