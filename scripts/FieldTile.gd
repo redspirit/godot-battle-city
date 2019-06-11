@@ -36,7 +36,7 @@ func drawTile(tileData) :
 		$sprite.frame = frame
 
 	if index == 1 :
-		z_index = 10
+		z_index = 1
 	
 	if index == 3 :
 

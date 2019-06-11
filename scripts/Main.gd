@@ -8,20 +8,19 @@ var lives = 3
 var enimiesPositionsStack = [
 	0, 208, 416,
 	0, 208, 416,
-#	0, 208, 416,
-#	0, 208, 416,
-#	0, 208, 416,
-#	0, 208, 416,
-#	0, 208
+	0, 208, 416,
+	0, 208, 416,
+	0, 208, 416,
+	0, 208, 416,
+	0, 208
 ]
 var livingEnemies = enimiesPositionsStack.size()
 
 
 func _on_Button_pressed():
 	#get_tree().change_scene("res://scenes/Editor.tscn")
-	spawnEnemy()
-	spawnEnemy()
-	spawnEnemy()
+	pass
+
 
 
 func _ready():
@@ -29,6 +28,9 @@ func _ready():
 	$tank.connect("playerKilled", self, "_on_PlayerKilled")
 	$UI/livesLabel.text = str(lives)
 	$UI/EnemiesLabel.text = str(livingEnemies)
+	
+	$ChangeStageUI.show()
+	
 	
 
 func spawnEnemy():
@@ -85,13 +87,18 @@ func loadMap(fileName) :
 				tile.drawTile(item)
 				$tiles.add_child(tile)
 		
-		$tank.respawn(tankPos)
+		onMapLoaded()
 		
 	else :
 		
 		print("Map not found")
 
 
+func onMapLoaded() :
+	$tank.respawn(tankPos)
+	spawnEnemy()
+	spawnEnemy()
+	spawnEnemy()
 
 func _on_Eagle_fortressDestroyed():
 	print("RUN GAME OVER")

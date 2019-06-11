@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/Main.gd" type="Script" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/Eagle.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scripts/ChangeStageUI.gd" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 242, 8 )
@@ -15,6 +16,22 @@ extents = Vector2( 241, 8 )
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 7, 232 )
+
+[sub_resource type="Animation" id=5]
+resource_name = "roll-up"
+step = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 145, -20 ), Vector2( 145, 230 ) ]
+}
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
@@ -41,7 +58,6 @@ position = Vector2( 471, 239 )
 shape = SubResource( 4 )
 
 [node name="back" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="gray_back" type="ColorRect" parent="back"]
 margin_right = 531.0
@@ -77,6 +93,7 @@ position = Vector2( 16, 16 )
 [node name="enemies" type="Node2D" parent="."]
 
 [node name="UI" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="TestButton" type="Button" parent="UI"]
 margin_left = 473.0
@@ -119,5 +136,35 @@ margin_right = 529.0
 margin_bottom = 62.0
 text = "20"
 align = 1
+
+[node name="ChangeStageUI" type="Node2D" parent="."]
+visible = false
+z_index = 2
+script = ExtResource( 4 )
+
+[node name="StageTimer" type="Timer" parent="ChangeStageUI"]
+wait_time = 4.0
+one_shot = true
+
+[node name="SolidColor" type="ColorRect" parent="ChangeStageUI"]
+margin_right = 532.0
+margin_bottom = 484.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="StageLabel" type="Label" parent="ChangeStageUI"]
+margin_left = 145.0
+margin_top = 240.0
+margin_right = 408.0
+margin_bottom = 313.001
+text = "STAGE 1"
+align = 1
+
+[node name="anim" type="AnimationPlayer" parent="ChangeStageUI/StageLabel"]
+playback_speed = 0.3
+anims/roll-up = SubResource( 5 )
 [connection signal="fortressDestroyed" from="Eagle" to="." method="_on_Eagle_fortressDestroyed"]
 [connection signal="pressed" from="UI/TestButton" to="." method="_on_Button_pressed"]
+[connection signal="timeout" from="ChangeStageUI/StageTimer" to="ChangeStageUI" method="_on_StageTimer_timeout"]
