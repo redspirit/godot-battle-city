@@ -58,6 +58,7 @@ position = Vector2( 471, 239 )
 shape = SubResource( 4 )
 
 [node name="back" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="gray_back" type="ColorRect" parent="back"]
 margin_right = 531.0
@@ -73,6 +74,9 @@ margin_top = 16.0
 margin_right = 464.0
 margin_bottom = 464.0
 color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="tiles" type="Node2D" parent="."]
 position = Vector2( 16, 16 )
@@ -138,6 +142,7 @@ text = "20"
 align = 1
 
 [node name="ChangeStageUI" type="Node2D" parent="."]
+editor/display_folded = true
 visible = false
 z_index = 2
 script = ExtResource( 4 )
@@ -155,10 +160,11 @@ __meta__ = {
 }
 
 [node name="StageLabel" type="Label" parent="ChangeStageUI"]
+editor/display_folded = true
 margin_left = 145.0
 margin_top = 240.0
 margin_right = 408.0
-margin_bottom = 313.001
+margin_bottom = 260.0
 text = "STAGE 1"
 align = 1
 
@@ -167,4 +173,5 @@ playback_speed = 0.3
 anims/roll-up = SubResource( 5 )
 [connection signal="fortressDestroyed" from="Eagle" to="." method="_on_Eagle_fortressDestroyed"]
 [connection signal="pressed" from="UI/TestButton" to="." method="_on_Button_pressed"]
+[connection signal="endShowing" from="ChangeStageUI" to="." method="_on_ChangeStageUI_endShowing"]
 [connection signal="timeout" from="ChangeStageUI/StageTimer" to="ChangeStageUI" method="_on_StageTimer_timeout"]

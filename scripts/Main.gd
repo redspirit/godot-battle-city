@@ -24,11 +24,7 @@ func _on_Button_pressed():
 
 
 func _ready():
-	loadMap("map2.txt")
-	$tank.connect("playerKilled", self, "_on_PlayerKilled")
-	$UI/livesLabel.text = str(lives)
-	$UI/EnemiesLabel.text = str(livingEnemies)
-	
+
 	$ChangeStageUI.show()
 	
 	
@@ -110,3 +106,9 @@ func _on_Eagle_fortressDestroyed():
 	
 func _on_catchPowerUp(name) :
 	print("_on_catchPowerUp ", name)
+
+func _on_ChangeStageUI_endShowing():
+	loadMap("map2.txt")
+	$tank.connect("playerKilled", self, "_on_PlayerKilled")
+	$UI/livesLabel.text = str(lives)
+	$UI/EnemiesLabel.text = str(livingEnemies)

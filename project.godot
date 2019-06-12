@@ -17,6 +17,7 @@ _global_script_class_icons={
 
 config/name="Battle City"
 run/main_scene="res://scenes/Menu.tscn"
+boot_splash/image="res://sprites/splash.png"
 config/icon="res://icon.png"
 
 [autoload]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://scripts/Menu.gd" type="Script" id=1]
 [ext_resource path="res://sprites/logo.png" type="Texture" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://sprites/movie/movie_3.png" type="Texture" id=9]
 [ext_resource path="res://sprites/movie/movie_4.png" type="Texture" id=10]
 [ext_resource path="res://music/menu.ogg" type="AudioStream" id=11]
+[ext_resource path="res://sounds/menu_shot.ogg" type="AudioStream" id=12]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -120,7 +121,6 @@ margin_bottom = 128.0
 text = "ВЫЙТИ"
 
 [node name="CopyText" type="Node2D" parent="."]
-editor/display_folded = true
 position = Vector2( 4, 390 )
 
 [node name="Label" type="Label" parent="CopyText"]
@@ -129,17 +129,15 @@ margin_top = 26.0
 margin_right = 512.0
 margin_bottom = 95.0
 text = "(C) 1980 NAMCO LTD.
-CLONE BY REDSPIRIT 2019
+REMASTERED BY REDSPIRIT 2019
 POWERED BY GODOT 2D"
 align = 1
 
 [node name="Tank" type="Node2D" parent="."]
-editor/display_folded = true
 position = Vector2( 140, 240 )
 scale = Vector2( 0.8, 0.8 )
 
 [node name="fireSprite" type="AnimatedSprite" parent="Tank"]
-editor/display_folded = true
 position = Vector2( 97, 23 )
 scale = Vector2( 0.867316, 0.867316 )
 frames = SubResource( 1 )
@@ -176,4 +174,9 @@ volume_db = -5.0
 wait_time = 0.9
 one_shot = true
 autostart = true
+
+[node name="Shot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = -5.0
+[connection signal="animation_finished" from="Tank/fireSprite/anim" to="." method="_on_Fire_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
