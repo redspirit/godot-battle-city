@@ -37,7 +37,10 @@ func _physics_process(delta):
 		return true
 		
 	if get_overlapping_bodies().size() > 0 :
-		position = Vector2(rand_range(32, 448), rand_range(32, 448)).snapped(Vector2(8, 8))
+		position = Vector2(rand_range(32, 448), rand_range(32, 448)).snapped(Vector2(16, 16))
+		
+		print(position)
+		
 	else :
 		isStand = true
 		$sprite.visible = true

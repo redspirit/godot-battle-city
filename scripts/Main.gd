@@ -19,6 +19,7 @@ var livingEnemies = enimiesPositionsStack.size()
 
 func _on_Button_pressed():
 	#get_tree().change_scene("res://scenes/Editor.tscn")
+	spawnPowerUp()
 	pass
 
 
@@ -99,10 +100,13 @@ func onMapLoaded() :
 func _on_Eagle_fortressDestroyed():
 	print("RUN GAME OVER")
 	
+
+	
+	
+func spawnPowerUp():
 	var pu = PowerUp.instance()
 	$powerups.add_child(pu)
 	pu.connect("catchPowerUp", self, "_on_catchPowerUp")
-	
 	
 func _on_catchPowerUp(name) :
 	print("_on_catchPowerUp ", name)
