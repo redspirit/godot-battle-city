@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 
-var SPEED = 300;
+var SPEED = 0;
 var dir = ''
 var motion = Vector2()
 var isPlayerBullet = true
@@ -15,7 +15,8 @@ func _physics_process(delta):
 
 
 
-func shoot(point, _dir, isPlayer) :
+func shoot(point, _dir, isPlayer, _speed) :
+	SPEED = _speed
 	dir = _dir;
 	position = point
 	startPoint = point

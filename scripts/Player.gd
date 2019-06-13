@@ -2,7 +2,8 @@ extends KinematicBody2D
 
 signal playerKilled
 
-var SPEED = 80
+var baseSpeed = 50
+var baseBulletSpeed = 150
 var dir = ""
 var inertia = 0
 var startForce = 1
@@ -13,8 +14,15 @@ var isShield = false;
 var shieldCurrentTime = 0
 var shieldTotalTime = 5
 
-var tier = 1
+var tiers = [
+	{"skin": 1, "speed": 1, 	"bulletsCount": 1, "bulletSpeed": 1},
+	{"skin": 2, "speed": 1.5, 	"bulletsCount": 2, "bulletSpeed": 2},
+	{"skin": 3, "speed": 2, 	"bulletsCount": 3, "bulletSpeed": 3},
+	{"skin": 4, "speed": 2.5, 	"bulletsCount": 3, "bulletSpeed": 4}
+]
 
+var currentTierNum = 0
+var currentTier = tiers[currentTierNum]
 
 var Bullet = preload("res://scenes/Bullet.tscn");
 
@@ -108,13 +116,14 @@ func _physics_process(delta):
 		
 		if get_tree().get_nodes_in_group("player").size() == 0 :
 			var bul = Bullet.instance()
-			bul.shoot(get_position(), dir, true)
+			bul.shoot(get_position(), dir, true, baseBulletSpeed * currentTier.bulletSpeed)
 			$"../bulletList".add_child(bul)
 		
 		
 		
-	var res = move_and_slide(motion * SPEED);
-	motion = res / SPEED
+	var speed = baseSpeed * currentTier.speed
+	var res = move_and_slide(motion * speed);
+	motion = res / speed
 	
 	
 	Global.tankPosition = get_position()
@@ -159,6 +168,15 @@ func setShield(state, timeout):
 		$shield.visible = false
 		$shield/anim.stop()
 
+func powerMe() :
+	currentTierNum += 1
+	if currentTierNum > 3:
+		currentTierNum = 3
+		
+	currentTier = tiers[currentTierNum]
+	$sprite.setSkin(currentTier.skin, false)
+
+
 func respawn(startPos):
 	position.x = startPos.x
 	position.y = startPos.y
@@ -167,8 +185,12 @@ func respawn(startPos):
 	$sprite.visible = false
 	$spawnSprite.visible = true
 	$spawnSprite/anim.play("spawn")
-	$sprite.setSkin(2)
 	$area/areaColl.disabled = true
+	
+	# reset tier
+	currentTierNum = 0
+	currentTier = tiers[currentTierNum]
+	$sprite.setSkin(currentTier.skin, false)
 
 # SPAWN ANIMATION
 func _on_anim_animation_finished(anim_name):

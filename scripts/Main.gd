@@ -5,16 +5,17 @@ var Enemy = preload("res://scenes/Enemy.tscn")
 var tankPos = Vector2()
 
 var lives = 3
-var enimiesPositionsStack = [
-	0, 208, 416,
-	0, 208, 416,
-	0, 208, 416,
-	0, 208, 416,
-	0, 208, 416,
-	0, 208, 416,
-	0, 208
+var enimiesStack = [		# [offset, tier, isPowered]
+	[0,1,false], [208,1,false], [416,1,false],
+	[0,1,true], [208,2,false], [416,1,false],
+	[0,1,false], [208,1,false], [416,2,false],
+	[0,2,false], [208,3,true], [416,1,false],
+	[0,3,false], [208,2,false], [416,3,false],
+	[0,1,false], [208,2,true], [416,3,false],
+	[0,4,false], [208,4,false]
 ]
-var livingEnemies = enimiesPositionsStack.size()
+
+var livingEnemies = enimiesStack.size()
 
 
 func _on_Button_pressed():
@@ -33,17 +34,24 @@ func _ready():
 func spawnEnemy():
 	
 	var enemy = Enemy.instance()
-	$enemies.add_child(enemy)
-	var offset = enimiesPositionsStack.pop_front()
+	var info = enimiesStack.pop_front()
+	var offset = info[0]
+	var tier = info[1]
+	var isPowered = info[2]
+	enemy.spawn(tier, isPowered)
 	enemy.set_position(Vector2(16 + 16 + offset, 16 + 16))
+	$enemies.add_child(enemy)
 	enemy.connect("enemyKilled", self, "_on_EnemyKilled")
 	
 	
-func _on_EnemyKilled():
+func _on_EnemyKilled(isPoweredEnemy):
 	livingEnemies -= 1
 	$UI/EnemiesLabel.text = str(livingEnemies)
 	
-	if enimiesPositionsStack.size() > 0 :
+	if isPoweredEnemy :
+		spawnPowerUp()
+	
+	if enimiesStack.size() > 0 :
 		spawnEnemy()
 		
 	if livingEnemies == 0 :
@@ -54,14 +62,17 @@ func _on_PlayerKilled():
 	lives -= 1
 	$UI/livesLabel.text = str(lives)
 	if lives == 0:
-		print("GAME OVER")
 		$tank.queue_free()
+		doGameOver()
 	else :
 		$tank.respawn(tankPos)
 	
 
-func loadMap(fileName) :
+func doGameOver() :
+	get_tree().change_scene("res://scenes/GameOver.tscn")
 	
+func loadMap(fileName) :
+
 	var FieldTile = preload("res://scenes/FieldTile.tscn")
 	
 	var file = File.new()
@@ -98,11 +109,9 @@ func onMapLoaded() :
 	spawnEnemy()
 
 func _on_Eagle_fortressDestroyed():
-	print("RUN GAME OVER")
-	
+	doGameOver()
 
-	
-	
+
 func spawnPowerUp():
 	var pu = PowerUp.instance()
 	$powerups.add_child(pu)

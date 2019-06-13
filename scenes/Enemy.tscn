@@ -49,6 +49,7 @@ collision_mask = 7
 script = ExtResource( 1 )
 
 [node name="coll" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 1 )
 
 [node name="sprite" type="Sprite" parent="."]
@@ -56,7 +57,7 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 vframes = 18
 hframes = 16
-frame = 8
+frame = 200
 script = ExtResource( 3 )
 tank_type = 1
 walk_interval = 0.1
@@ -87,6 +88,7 @@ playback_speed = 3.0
 anims/explode = SubResource( 3 )
 
 [node name="Area2D" type="Area2D" parent="."]
+visible = false
 collision_layer = 15
 collision_mask = 15
 

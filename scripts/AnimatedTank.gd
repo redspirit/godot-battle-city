@@ -49,8 +49,10 @@ func playDirection(dir):
 	oldDir = dir;
 
 
-func setSkin(num): 
+func setSkin(num, isPowered): 
 	skinOffset = (num - 1) * 16
+	if isPowered:
+		skinOffset += 128
 
 	
 func stop() :

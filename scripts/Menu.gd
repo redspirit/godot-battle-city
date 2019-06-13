@@ -4,13 +4,12 @@ extends Node2D
 var cursorCoords = [240, 289, 333]
 var cursorIndex = 0
 
+
 func _ready():
 	$Tank/fireSprite.visible = false
 	$Tank/movieSprite.visible = true
 	$Tank/movieSprite/anim.play("move")
 	$Tank/anim.play("roll")
-
-	
 
 func _process(delta):
 

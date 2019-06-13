@@ -1,22 +1,41 @@
 extends KinematicBody2D
 
-signal enemyKilled
+signal enemyKilled(isPowered)
 
 var isEnemy = true
 var isFirstTick = true;
 var isSpawned = false
 var motion = Vector2()
-var SPEED = 50
+var baseSpeed = 40
+var baseBulletSpeed = 150
 var dir = "down"
+var health = 1
+var isPowered = false
+
+var tiers = [
+	{"speed": 1, "skin": 1, "health": 1, "bulletSpeed": 1},
+	{"speed": 3, "skin": 2, "health": 1, "bulletSpeed": 2},
+	{"speed": 2, "skin": 3, "health": 2, "bulletSpeed": 3},
+	{"speed": 2, "skin": 4, "health": 4, "bulletSpeed": 2}
+]
+
+var currentTier
 
 var Bullet = preload("res://scenes/Bullet.tscn");
 
 func _ready():
+	pass
+	
+	
+func spawn(tierNum, _isPowered):
 	randomize()
+	isPowered = _isPowered
 	$Area2D/coll.disabled = true
 	$sprite.visible = false
 	$spawnSprite.visible = true
 	$spawnSprite/anim.play("spawn")
+	currentTier = tiers[tierNum - 1]
+	health = currentTier.health
 	
 func setDir() :
 	dir = ["up", "left", "right", "down"][int(rand_range(0, 4))];
@@ -34,12 +53,9 @@ func setDir() :
 
 
 func _physics_process(delta):
-	
-	var offset = move_and_slide(motion * SPEED);
-	
+	var offset = move_and_slide(motion * currentTier.speed * baseSpeed);
 	if isSpawned && offset.length() == 0 && motion.length() > 0:
 		setDir()
-	
 
 
 # анимация спавна кончается
@@ -47,7 +63,7 @@ func _on_anim_animation_finished(anim_name):
 	$spawnSprite.visible = false
 	$sprite.visible = true
 	setDir()
-	$sprite.setSkin(int(rand_range(1, 5)))
+	$sprite.setSkin(currentTier.skin, isPowered)
 	isSpawned = true
 	$shotTimer.start()
 	$Area2D/coll.disabled = false
@@ -57,16 +73,22 @@ func _on_anim_animation_finished(anim_name):
 func _on_Area2D_area_entered(area):
 #	pass
 	if area.name == "bulletArea" && area.get_parent().get("isPlayerBullet"):
-		$sprite.visible = false
-		$explode.visible = true
-		$explode/anim.play("explode")
-		motion = Vector2()
-		$movieTimer.stop()
-		$shotTimer.stop()
+		health -= 1
+		if health == 0:
+			explodeMe()
 		
+		
+func explodeMe() :
+	$sprite.visible = false
+	$explode.visible = true
+	$explode/anim.play("explode")
+	motion = Vector2()
+	$movieTimer.stop()
+	$shotTimer.stop()
+
 
 func _on_explode_animation_finished(anim_name):
-	emit_signal("enemyKilled")
+	emit_signal("enemyKilled", isPowered)
 	queue_free()
 
 
@@ -77,5 +99,5 @@ func _on_Timer_timeout():
 
 func _on_shotTimer_timeout():
 	var bul = Bullet.instance()
-	bul.shoot(get_position(), dir, false)
+	bul.shoot(position, dir, false, currentTier.bulletSpeed * baseBulletSpeed)
 	$"../../bulletList".add_child(bul)
