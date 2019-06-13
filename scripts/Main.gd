@@ -117,8 +117,29 @@ func spawnPowerUp():
 	$powerups.add_child(pu)
 	pu.connect("catchPowerUp", self, "_on_catchPowerUp")
 	
+func destroyAllEnemies():
+	for en in $enemies.get_children():
+		en.explodeMe()
+
+func freezeAllEnemies():
+	for en in $enemies.get_children():
+		en.freeze(10)
+	
 func _on_catchPowerUp(name) :
-	print("_on_catchPowerUp ", name)
+	print("catch PowerUp ", name)
+	if name == "helmet" :		#временное силовое поле, неуязвимость
+		$tank.setShield(true, 10)
+	elif name == "timer" :		#замораживает врагов
+		freezeAllEnemies()
+	elif name == "shovel" :		#окапывает штаб бронью
+		pass
+	elif name == "star":		#повышение ранга
+		$tank.powerMe()
+	elif name == "granade" :	#убивает всех врагов
+		destroyAllEnemies()
+	elif name == "tank":		#+1 жизнь
+		lives += 1
+		$UI/livesLabel.text = str(lives)
 
 func _on_ChangeStageUI_endShowing():
 	loadMap("map2.txt")

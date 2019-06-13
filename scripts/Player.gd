@@ -2,8 +2,8 @@ extends KinematicBody2D
 
 signal playerKilled
 
-var baseSpeed = 50
-var baseBulletSpeed = 150
+var baseSpeed = 60
+var baseBulletSpeed = 160
 var dir = ""
 var inertia = 0
 var startForce = 1
@@ -16,9 +16,9 @@ var shieldTotalTime = 5
 
 var tiers = [
 	{"skin": 1, "speed": 1, 	"bulletsCount": 1, "bulletSpeed": 1},
-	{"skin": 2, "speed": 1.5, 	"bulletsCount": 2, "bulletSpeed": 2},
-	{"skin": 3, "speed": 2, 	"bulletsCount": 3, "bulletSpeed": 3},
-	{"skin": 4, "speed": 2.5, 	"bulletsCount": 3, "bulletSpeed": 4}
+	{"skin": 2, "speed": 1.5, 	"bulletsCount": 1, "bulletSpeed": 1.7},
+	{"skin": 3, "speed": 2, 	"bulletsCount": 2, "bulletSpeed": 2.3},
+	{"skin": 4, "speed": 2, 	"bulletsCount": 2, "bulletSpeed": 3}
 ]
 
 var currentTierNum = 0
@@ -114,7 +114,7 @@ func _physics_process(delta):
 		
 	if Input.is_action_just_pressed("ui_select") :
 		
-		if get_tree().get_nodes_in_group("player").size() == 0 :
+		if get_tree().get_nodes_in_group("player").size() < currentTier.bulletsCount:
 			var bul = Bullet.instance()
 			bul.shoot(get_position(), dir, true, baseBulletSpeed * currentTier.bulletSpeed)
 			$"../bulletList".add_child(bul)

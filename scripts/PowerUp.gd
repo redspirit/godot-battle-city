@@ -3,12 +3,12 @@ extends Area2D
 signal catchPowerUp(name)
 
 var names = {
-	272: "helmet",		#временное силовое поле, неуязвимость
-	273: "timer",		#замораживает врагов
-	274: "shovel",		#окапывает штаб бронью
-	275: "star",		#повышение ранга
-	276: "granade",		#убивает всех врагов
-	277: "tank" 		#+1 жизнь
+	272: "helmet",
+	273: "timer",
+	274: "shovel",
+	275: "star",
+	276: "granade",
+	277: "tank"
 }
 
 var isFirstTick = true;
@@ -37,10 +37,7 @@ func _physics_process(delta):
 		return true
 		
 	if get_overlapping_bodies().size() > 0 :
-		position = Vector2(rand_range(32, 448), rand_range(32, 448)).snapped(Vector2(16, 16))
-		
-		print(position)
-		
+		position = Vector2(rand_range(32, 448), rand_range(32, 448)).snapped(Vector2(16, 16))		
 	else :
 		isStand = true
 		$sprite.visible = true

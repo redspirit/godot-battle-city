@@ -11,6 +11,7 @@ var baseBulletSpeed = 150
 var dir = "down"
 var health = 1
 var isPowered = false
+var isFreeze = false
 
 var tiers = [
 	{"speed": 1, "skin": 1, "health": 1, "bulletSpeed": 1},
@@ -53,6 +54,10 @@ func setDir() :
 
 
 func _physics_process(delta):
+	
+	if isFreeze:
+		return 
+	
 	var offset = move_and_slide(motion * currentTier.speed * baseSpeed);
 	if isSpawned && offset.length() == 0 && motion.length() > 0:
 		setDir()
@@ -86,6 +91,9 @@ func explodeMe() :
 	$movieTimer.stop()
 	$shotTimer.stop()
 
+func freeze(timeout) :
+	isFreeze = true
+	$freezeTimer.start(timeout)
 
 func _on_explode_animation_finished(anim_name):
 	emit_signal("enemyKilled", isPowered)
@@ -93,11 +101,18 @@ func _on_explode_animation_finished(anim_name):
 
 
 func _on_Timer_timeout():
+	if isFreeze:
+		return
 	set_position( position.snapped(Vector2(8, 8)) )
 	setDir()
 
 
 func _on_shotTimer_timeout():
+	if isFreeze:
+		return
 	var bul = Bullet.instance()
 	bul.shoot(position, dir, false, currentTier.bulletSpeed * baseBulletSpeed)
 	$"../../bulletList".add_child(bul)
+
+func _on_freezeTimer_timeout():
+	isFreeze = false
