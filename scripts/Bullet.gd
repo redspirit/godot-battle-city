@@ -53,6 +53,8 @@ func explode() :
 	motion = Vector2()
 	$explode_sprite.visible = true;
 	$explode_sprite/anim.play("explode");
+	$CollisionShape2D.disabled = true
+	$bulletArea/CollisionShape2D.disabled = true
 	
 
 func _on_Area2D_body_entered(body):

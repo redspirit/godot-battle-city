@@ -104,7 +104,7 @@ func _physics_process(delta):
 	isOldMoving = isMoving
 		
 	if isMoving :
-		if $area.get_overlapping_bodies().size() > 0 :
+		if $iceArea.get_overlapping_bodies().size() > 0 :
 			inertia = 0.95
 			startForce = 0.02
 		else :
@@ -206,7 +206,7 @@ func _on_shield_animation_finished(anim_name):
 
 
 func _on_area_area_entered(area):
-	if area.name == "bulletArea":
+	if area.name == "bulletArea" && !$shield.visible:
 		$sprite.visible = false
 		$explode.visible = true
 		$explode/anim.play("explode")

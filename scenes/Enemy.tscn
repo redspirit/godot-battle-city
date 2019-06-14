@@ -5,7 +5,7 @@
 [ext_resource path="res://scripts/AnimatedTank.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 15.8, 15.8 )
+extents = Vector2( 15.5, 15.5 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "spawn"
@@ -41,7 +41,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 15.8, 15.8 )
+extents = Vector2( 16.5, 16.5 )
 
 [node name="Enemy" type="KinematicBody2D"]
 collision_layer = 4
@@ -88,7 +88,6 @@ playback_speed = 3.0
 anims/explode = SubResource( 3 )
 
 [node name="Area2D" type="Area2D" parent="."]
-visible = false
 collision_layer = 15
 collision_mask = 15
 

@@ -14,7 +14,7 @@ var names = {
 var isFirstTick = true;
 var isStand = false
 var currentState = 0
-var lifeTime = 10 #seconds
+var lifeTime = 15 #seconds
 var timeElapsed = 0
 
 func _ready():

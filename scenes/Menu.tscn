@@ -99,7 +99,6 @@ scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 2 )
 
 [node name="TextMenu" type="Node2D" parent="."]
-editor/display_folded = true
 position = Vector2( 249, 232 )
 
 [node name="Label" type="Label" parent="TextMenu"]

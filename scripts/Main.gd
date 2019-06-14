@@ -2,35 +2,30 @@ extends Node2D
 
 var PowerUp = preload("res://scenes/PowerUp.tscn")
 var Enemy = preload("res://scenes/Enemy.tscn")
+var FieldTile = preload("res://scenes/FieldTile.tscn")
 var tankPos = Vector2()
+var currentMapNum
 
 var lives = 3
-var enimiesStack = [		# [offset, tier, isPowered]
-	[0,1,false], [208,1,false], [416,1,false],
-	[0,1,true], [208,2,false], [416,1,false],
-	[0,1,false], [208,1,false], [416,2,false],
-	[0,2,false], [208,3,true], [416,1,false],
-	[0,3,false], [208,2,false], [416,3,false],
-	[0,1,false], [208,2,true], [416,3,false],
-	[0,4,false], [208,4,false]
-]
+var enimiesStack = []
 
-var livingEnemies = enimiesStack.size()
-
-
-func _on_Button_pressed():
-	#get_tree().change_scene("res://scenes/Editor.tscn")
-	spawnPowerUp()
-	pass
-
-
+var livingEnemies = 0
 
 func _ready():
-
-	$ChangeStageUI.show()
+	$tank.connect("playerKilled", self, "_on_PlayerKilled")
+	
+	if Global.selectedItem == 0 :		# new game
+		currentMapNum = 1
+		Global.saveGame(1)
+	elif Global.selectedItem == 1 :		#continue
+		var gameData = Global.loadGame()
+		if gameData:
+			currentMapNum = gameData.stage
+		else :
+			currentMapNum = 1
+	$ChangeStageUI.showed(currentMapNum)
 	
 	
-
 func spawnEnemy():
 	
 	var enemy = Enemy.instance()
@@ -55,8 +50,17 @@ func _on_EnemyKilled(isPoweredEnemy):
 		spawnEnemy()
 		
 	if livingEnemies == 0 :
-		print("VICTORY")
+		endStage()
 		
+	
+func endStage():
+	currentMapNum += 1
+	if currentMapNum > 10 :
+		print("GAME ENDED!")
+	else :
+		Global.saveGame(currentMapNum)
+		$ChangeStageUI.showed(currentMapNum)
+
 	
 func _on_PlayerKilled():
 	lives -= 1
@@ -71,19 +75,20 @@ func _on_PlayerKilled():
 func doGameOver() :
 	get_tree().change_scene("res://scenes/GameOver.tscn")
 	
-func loadMap(fileName) :
-
-	var FieldTile = preload("res://scenes/FieldTile.tscn")
+func loadMap() :
 	
-	var file = File.new()
 	
-	if file.file_exists("res://maps/" + fileName) :
+	for it in $tiles.get_children():
+		it.queue_free()
+	
+	var data = Global.loadMap(currentMapNum)
+	
+	if data:
 		
-		file.open("res://maps/" + fileName, File.READ)
-		var data = JSON.parse(file.get_as_text())
-		file.close()
+		enimiesStack = data.enemies
+		livingEnemies = enimiesStack.size()
 		
-		for item in data.result:
+		for item in data.map:
 			if item[2] == 5 :		#eagle
 				$Eagle.position.x = item[0] * 16 + 32
 				$Eagle.position.y = item[1] * 16 + 32
@@ -96,10 +101,8 @@ func loadMap(fileName) :
 				$tiles.add_child(tile)
 		
 		onMapLoaded()
-		
-	else :
-		
-		print("Map not found")
+	else :	
+		print("Map not loaded")
 
 
 func onMapLoaded() :
@@ -124,6 +127,34 @@ func destroyAllEnemies():
 func freezeAllEnemies():
 	for en in $enemies.get_children():
 		en.freeze(10)
+
+var blockTilesSet = []
+func protectFortress(isBlock) :
+	var coords = [ [0,0], [1,0], [2,0], [3,0], [0,1], [0,2], [3,1], [3,2] ]
+	var tileIndex = 3
+	if isBlock:
+		tileIndex = 0
+		$fortressTimer.start(10)
+		
+	if !isBlock:
+		for t in blockTilesSet:
+			t.queue_free()
+		blockTilesSet = []
+		
+	for coord in coords:
+		var tx = coord[0] + 12
+		var ty = coord[1] + 25
+		var finded = $tiles.get_node("tile_" + str(tx) + "_" + str(ty))
+		if finded:
+			finded.queue_free()
+		var tile = FieldTile.instance()
+		tile.drawTile([ tx, ty, tileIndex ])
+		$tiles.add_child(tile)
+		if isBlock:
+			blockTilesSet.append(tile)
+	
+func _on_fortressTimer_timeout():
+	protectFortress(false)
 	
 func _on_catchPowerUp(name) :
 	print("catch PowerUp ", name)
@@ -132,7 +163,7 @@ func _on_catchPowerUp(name) :
 	elif name == "timer" :		#замораживает врагов
 		freezeAllEnemies()
 	elif name == "shovel" :		#окапывает штаб бронью
-		pass
+		protectFortress(true)
 	elif name == "star":		#повышение ранга
 		$tank.powerMe()
 	elif name == "granade" :	#убивает всех врагов
@@ -141,8 +172,14 @@ func _on_catchPowerUp(name) :
 		lives += 1
 		$UI/livesLabel.text = str(lives)
 
+func _on_Button_pressed():
+	#get_tree().change_scene("res://scenes/Editor.tscn")
+	endStage()
+	#spawnPowerUp()
+	pass
+
 func _on_ChangeStageUI_endShowing():
-	loadMap("map2.txt")
-	$tank.connect("playerKilled", self, "_on_PlayerKilled")
+	loadMap()
 	$UI/livesLabel.text = str(lives)
 	$UI/EnemiesLabel.text = str(livingEnemies)
+

@@ -30,14 +30,13 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 145, -20 ), Vector2( 145, 230 ) ]
+"values": [ Vector2( 0, -20 ), Vector2( 0, 230 ) ]
 }
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
 
 [node name="walls" type="KinematicBody2D" parent="."]
-editor/display_folded = true
 collision_layer = 0
 collision_mask = 15
 
@@ -97,6 +96,7 @@ position = Vector2( 16, 16 )
 [node name="enemies" type="Node2D" parent="."]
 
 [node name="UI" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="TestButton" type="Button" parent="UI"]
 margin_left = 473.0
@@ -141,13 +141,12 @@ text = "20"
 align = 1
 
 [node name="ChangeStageUI" type="Node2D" parent="."]
-editor/display_folded = true
 visible = false
 z_index = 2
 script = ExtResource( 4 )
 
 [node name="StageTimer" type="Timer" parent="ChangeStageUI"]
-wait_time = 4.0
+wait_time = 3.5
 one_shot = true
 
 [node name="SolidColor" type="ColorRect" parent="ChangeStageUI"]
@@ -159,18 +158,22 @@ __meta__ = {
 }
 
 [node name="StageLabel" type="Label" parent="ChangeStageUI"]
-editor/display_folded = true
-margin_left = 145.0
 margin_top = 240.0
-margin_right = 408.0
+margin_right = 533.0
 margin_bottom = 260.0
 text = "STAGE 1"
 align = 1
+valign = 1
+uppercase = true
 
 [node name="anim" type="AnimationPlayer" parent="ChangeStageUI/StageLabel"]
 playback_speed = 0.3
 anims/roll-up = SubResource( 5 )
+
+[node name="fortressTimer" type="Timer" parent="."]
+one_shot = true
 [connection signal="fortressDestroyed" from="Eagle" to="." method="_on_Eagle_fortressDestroyed"]
 [connection signal="pressed" from="UI/TestButton" to="." method="_on_Button_pressed"]
 [connection signal="endShowing" from="ChangeStageUI" to="." method="_on_ChangeStageUI_endShowing"]
 [connection signal="timeout" from="ChangeStageUI/StageTimer" to="ChangeStageUI" method="_on_StageTimer_timeout"]
+[connection signal="timeout" from="fortressTimer" to="." method="_on_fortressTimer_timeout"]

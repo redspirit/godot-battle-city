@@ -11,7 +11,7 @@ var indexToFrame = {
 var colLayers = {
 	0: [0,15],
 	1: [0,0],
-	2: [0,0],
+	2: [16,0],
 	3: [0,15],
 	4: [0,5] 
 }
@@ -26,6 +26,8 @@ func drawTile(tileData) :
 	
 	position.x = tileData[0] * 16 + 8
 	position.y = tileData[1] * 16 + 8
+	
+	set_name("tile_" + str(tileData[0]) + "_" + str(tileData[1]))
 	
 	collision_layer = collayer[0]
 	collision_mask = collayer[1]

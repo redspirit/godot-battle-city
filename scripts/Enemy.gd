@@ -76,7 +76,6 @@ func _on_anim_animation_finished(anim_name):
 
 # ловим пулю
 func _on_Area2D_area_entered(area):
-#	pass
 	if area.name == "bulletArea" && area.get_parent().get("isPlayerBullet"):
 		health -= 1
 		if health == 0:
