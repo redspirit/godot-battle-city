@@ -13,7 +13,6 @@ func _ready():
 	$Tank/anim.play("roll")
 	
 	var gameData = Global.loadGame()
-	print(gameData.stage)
 	if gameData:
 		continueDisabled = !(gameData.stage > 1)
 	
