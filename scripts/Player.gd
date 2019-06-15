@@ -121,7 +121,7 @@ func _physics_process(delta):
 		
 		
 		
-	var speed = baseSpeed * currentTier.speed
+	var speed = baseSpeed * currentTier.speed * Global.speed
 	var res = move_and_slide(motion * speed);
 	motion = res / speed
 	
@@ -191,6 +191,10 @@ func respawn(startPos):
 	currentTierNum = 0
 	currentTier = tiers[currentTierNum]
 	$sprite.setSkin(currentTier.skin, false)
+
+func stopMe():
+	canMove = false
+	pass
 
 # SPAWN ANIMATION
 func _on_anim_animation_finished(anim_name):

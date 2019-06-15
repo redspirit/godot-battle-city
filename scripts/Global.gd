@@ -2,6 +2,7 @@ extends Node
 
 var tankPosition = Vector2()
 var selectedItem = 0
+var speed = 1.3
 
 static func is_bit_enabled(mask, index):
     return mask & (1 << index) != 0

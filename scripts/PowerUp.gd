@@ -11,7 +11,7 @@ var names = {
 	277: "tank"
 }
 
-var isFirstTick = true;
+var isFirstTick = true
 var isStand = false
 var currentState = 0
 var lifeTime = 15 #seconds

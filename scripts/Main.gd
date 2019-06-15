@@ -30,11 +30,9 @@ func spawnEnemy():
 	
 	var enemy = Enemy.instance()
 	var info = enimiesStack.pop_front()
-	var offset = info[0]
-	var tier = info[1]
-	var isPowered = info[2]
+	var tier = info[0]
+	var isPowered = info[1]
 	enemy.spawn(tier, isPowered)
-	enemy.set_position(Vector2(16 + 16 + offset, 16 + 16))
 	$enemies.add_child(enemy)
 	enemy.connect("enemyKilled", self, "_on_EnemyKilled")
 	
@@ -63,6 +61,7 @@ func endStage():
 
 	
 func _on_PlayerKilled():
+	print("KILLED")
 	lives -= 1
 	$UI/livesLabel.text = str(lives)
 	if lives == 0:
@@ -70,10 +69,6 @@ func _on_PlayerKilled():
 		doGameOver()
 	else :
 		$tank.respawn(tankPos)
-	
-
-func doGameOver() :
-	get_tree().change_scene("res://scenes/GameOver.tscn")
 	
 func loadMap() :
 	
@@ -107,8 +102,7 @@ func loadMap() :
 
 func onMapLoaded() :
 	$tank.respawn(tankPos)
-	spawnEnemy()
-	spawnEnemy()
+	$FirstSpawnTimer.start(2)
 	spawnEnemy()
 
 func _on_Eagle_fortressDestroyed():
@@ -173,13 +167,32 @@ func _on_catchPowerUp(name) :
 		$UI/livesLabel.text = str(lives)
 
 func _on_Button_pressed():
-	get_tree().change_scene("res://scenes/Editor.tscn")
+	#get_tree().change_scene("res://scenes/Editor.tscn")
 	#endStage()
 	#spawnPowerUp()
+	spawnEnemy()
 	pass
 
 func _on_ChangeStageUI_endShowing():
 	loadMap()
 	$UI/livesLabel.text = str(lives)
 	$UI/EnemiesLabel.text = str(livingEnemies)
+
+
+func doGameOver() :
+	$tank.stopMe()
+	$GameoverTimer.start(2)
+
+func _on_GameoverTimer_timeout():
+	get_tree().change_scene("res://scenes/GameOver.tscn")
+
+
+var timerTicks = 0
+func _on_FirstSpawnTimer_timeout():
+	timerTicks += 1
+	if timerTicks == 3:
+		timerTicks = 0
+		return 
+	$FirstSpawnTimer.start(2)
+	spawnEnemy()
 

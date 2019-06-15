@@ -5,6 +5,7 @@ signal enemyKilled(isPowered)
 var isEnemy = true
 var isFirstTick = true;
 var isSpawned = false
+var isStand = false
 var motion = Vector2()
 var baseSpeed = 40
 var baseBulletSpeed = 150
@@ -16,8 +17,8 @@ var isFreeze = false
 var tiers = [
 	{"speed": 1, "skin": 1, "health": 1, "bulletSpeed": 1},
 	{"speed": 3, "skin": 2, "health": 1, "bulletSpeed": 2},
-	{"speed": 2, "skin": 3, "health": 2, "bulletSpeed": 3},
-	{"speed": 2, "skin": 4, "health": 4, "bulletSpeed": 2}
+	{"speed": 2, "skin": 3, "health": 1, "bulletSpeed": 3},
+	{"speed": 2, "skin": 4, "health": 3, "bulletSpeed": 2}
 ]
 
 var currentTier
@@ -31,12 +32,10 @@ func _ready():
 func spawn(tierNum, _isPowered):
 	randomize()
 	isPowered = _isPowered
-	$Area2D/coll.disabled = true
 	$sprite.visible = false
-	$spawnSprite.visible = true
-	$spawnSprite/anim.play("spawn")
 	currentTier = tiers[tierNum - 1]
 	health = currentTier.health
+	visible = false
 	
 func setDir() :
 	dir = ["up", "left", "right", "down"][int(rand_range(0, 4))];
@@ -52,15 +51,32 @@ func setDir() :
 		
 	$movieTimer.start()
 
-
 func _physics_process(delta):
 	
+	if isFirstTick :
+		isFirstTick = false
+		return true
+		
 	if isFreeze:
-		return 
+		return
+		
+	if !isStand:
+		
+		if $SpawnArea.get_overlapping_bodies().size() > 0 :
+			position = Vector2(rand_range(32, 448), 32).snapped(Vector2(16, 16))
+			#print(position)
+		else :
+			isStand = true
+			visible = true
+			$spawnSprite.visible = true
+			$spawnSprite/anim.play("spawn")
+			$Area2D/coll.disabled = true
+
+	else :
 	
-	var offset = move_and_slide(motion * currentTier.speed * baseSpeed);
-	if isSpawned && offset.length() == 0 && motion.length() > 0:
-		setDir()
+		var offset = move_and_slide(motion * currentTier.speed * baseSpeed * Global.speed);
+		if isSpawned && offset.length() == 0 && motion.length() > 0:
+			setDir()
 
 
 # анимация спавна кончается

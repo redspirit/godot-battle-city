@@ -11,7 +11,7 @@ func _ready():
 	pass
 
 func _physics_process(delta):
-	position += motion * SPEED * delta
+	position += motion * SPEED * delta * Global.speed
 
 
 

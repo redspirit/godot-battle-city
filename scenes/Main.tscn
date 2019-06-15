@@ -97,8 +97,10 @@ position = Vector2( 16, 16 )
 [node name="enemies" type="Node2D" parent="."]
 
 [node name="UI" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="TestButton" type="Button" parent="UI"]
+visible = false
 margin_left = 473.0
 margin_top = 427.0
 margin_right = 508.0
@@ -173,8 +175,17 @@ anims/roll-up = SubResource( 5 )
 
 [node name="fortressTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="GameoverTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="FirstSpawnTimer" type="Timer" parent="."]
+one_shot = true
 [connection signal="fortressDestroyed" from="Eagle" to="." method="_on_Eagle_fortressDestroyed"]
 [connection signal="pressed" from="UI/TestButton" to="." method="_on_Button_pressed"]
 [connection signal="endShowing" from="ChangeStageUI" to="." method="_on_ChangeStageUI_endShowing"]
 [connection signal="timeout" from="ChangeStageUI/StageTimer" to="ChangeStageUI" method="_on_StageTimer_timeout"]
 [connection signal="timeout" from="fortressTimer" to="." method="_on_fortressTimer_timeout"]
+[connection signal="timeout" from="GameoverTimer" to="." method="_on_GameoverTimer_timeout"]
+[connection signal="timeout" from="FirstSpawnTimer" to="." method="_on_FirstSpawnTimer_timeout"]
