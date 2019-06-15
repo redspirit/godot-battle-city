@@ -12,20 +12,13 @@ static func enable_bit(mask, index):
 static func disable_bit(mask, index):
     return mask & ~(1 << index)
 	
+		
 static func loadMap(num) :
+	var MapData = preload("res://scripts/Maps.gd");
+	var data = MapData.new()
+	return data.maplist[num - 1]
 	
-	var file = File.new()
-	var fn = "res://maps/map_" + str(num) + ".txt";
-	
-	if file.file_exists(fn) :
-		file.open(fn, File.READ)
-		var data = JSON.parse(file.get_as_text())
-		file.close()
-		return data.result
-	else :
-		return null
-		
-		
+
 static func saveMap(num, data):
 	var file = File.new()
 	var fn = "res://maps/map_" + str(num) + ".txt";

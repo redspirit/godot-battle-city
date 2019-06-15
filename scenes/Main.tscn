@@ -99,7 +99,6 @@ position = Vector2( 16, 16 )
 [node name="UI" type="Node2D" parent="."]
 
 [node name="TestButton" type="Button" parent="UI"]
-visible = false
 margin_left = 473.0
 margin_top = 427.0
 margin_right = 508.0

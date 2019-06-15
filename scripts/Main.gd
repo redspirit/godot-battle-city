@@ -173,8 +173,8 @@ func _on_catchPowerUp(name) :
 		$UI/livesLabel.text = str(lives)
 
 func _on_Button_pressed():
-	#get_tree().change_scene("res://scenes/Editor.tscn")
-	endStage()
+	get_tree().change_scene("res://scenes/Editor.tscn")
+	#endStage()
 	#spawnPowerUp()
 	pass
 
