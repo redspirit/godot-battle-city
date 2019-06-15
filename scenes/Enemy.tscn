@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/Enemy.gd" type="Script" id=1]
 [ext_resource path="res://sprites/bc_0.png" type="Texture" id=2]
 [ext_resource path="res://scripts/AnimatedTank.gd" type="Script" id=3]
+[ext_resource path="res://sounds/enemy_explosion.wav" type="AudioStream" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 15.5, 15.5 )
@@ -107,11 +108,16 @@ wait_time = 2.0
 one_shot = true
 
 [node name="SpawnArea" type="Area2D" parent="."]
+editor/display_folded = true
 collision_layer = 15
 collision_mask = 15
 
 [node name="coll" type="CollisionShape2D" parent="SpawnArea"]
 shape = SubResource( 5 )
+
+[node name="Explode" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -12.0
 [connection signal="animation_finished" from="spawnSprite/anim" to="." method="_on_anim_animation_finished"]
 [connection signal="animation_finished" from="explode/anim" to="." method="_on_explode_animation_finished"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]

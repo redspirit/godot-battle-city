@@ -12,6 +12,8 @@ func _ready():
 	$Tank/movieSprite/anim.play("move")
 	$Tank/anim.play("roll")
 	
+	$MainTheme.play()
+	
 	var gameData = Global.loadGame()
 	if gameData:
 		continueDisabled = !(gameData.stage > 1)
@@ -26,11 +28,13 @@ func _process(delta):
 		cursorIndex += 1
 		if cursorIndex >= 2:
 			cursorIndex = 2
+		$SelectSound.play()
 
 	if Input.is_action_just_pressed("ui_up") && canMove:
 		cursorIndex -= 1
 		if cursorIndex <= 0:
 			cursorIndex = 0
+		$SelectSound.play()
 	
 	if Input.is_action_just_pressed("ui_accept") :
 		
@@ -61,7 +65,7 @@ func selectItem():
 
 
 func _on_Timer_timeout():
-	$MainTheme.play()
+	pass
 
 
 func _on_Fire_animation_finished(anim_name):

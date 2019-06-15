@@ -105,6 +105,7 @@ func explodeMe() :
 	motion = Vector2()
 	$movieTimer.stop()
 	$shotTimer.stop()
+	$Explode.play()
 
 func freeze(timeout) :
 	isFreeze = true

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/danke-8-bit-beat.ogg-af2a66ff6ec617ac53bf9bca2c0d4190.oggstr"
+
+[deps]
+
+source_file="res://music/danke-8-bit-beat.ogg"
+dest_files=[ "res://.import/danke-8-bit-beat.ogg-af2a66ff6ec617ac53bf9bca2c0d4190.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

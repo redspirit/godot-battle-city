@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://scripts/Menu.gd" type="Script" id=1]
 [ext_resource path="res://sprites/logo.png" type="Texture" id=2]
@@ -10,8 +10,9 @@
 [ext_resource path="res://sprites/movie/movie_2.png" type="Texture" id=8]
 [ext_resource path="res://sprites/movie/movie_3.png" type="Texture" id=9]
 [ext_resource path="res://sprites/movie/movie_4.png" type="Texture" id=10]
-[ext_resource path="res://music/menu.ogg" type="AudioStream" id=11]
+[ext_resource path="res://music/danke-8-bit-beat.ogg" type="AudioStream" id=11]
 [ext_resource path="res://sounds/menu_shot.ogg" type="AudioStream" id=12]
+[ext_resource path="res://sounds/menu-navigate-00.wav" type="AudioStream" id=13]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -177,5 +178,8 @@ autostart = true
 [node name="Shot" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 12 )
 volume_db = -5.0
+
+[node name="SelectSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
 [connection signal="animation_finished" from="Tank/fireSprite/anim" to="." method="_on_Fire_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

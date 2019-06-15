@@ -58,10 +58,10 @@ func endStage():
 	else :
 		Global.saveGame(currentMapNum)
 		$ChangeStageUI.showed(currentMapNum)
+	$MisucPlayer.stop()
 
 	
 func _on_PlayerKilled():
-	print("KILLED")
 	lives -= 1
 	$UI/livesLabel.text = str(lives)
 	if lives == 0:
@@ -104,8 +104,10 @@ func onMapLoaded() :
 	$tank.respawn(tankPos)
 	$FirstSpawnTimer.start(2)
 	spawnEnemy()
+	$MisucPlayer.play()
 
 func _on_Eagle_fortressDestroyed():
+	$Sounds/FortressExplode.play()
 	doGameOver()
 
 
@@ -151,7 +153,7 @@ func _on_fortressTimer_timeout():
 	protectFortress(false)
 	
 func _on_catchPowerUp(name) :
-	print("catch PowerUp ", name)
+	$Sounds/Pickup.play()
 	if name == "helmet" :		#временное силовое поле, неуязвимость
 		$tank.setShield(true, 10)
 	elif name == "timer" :		#замораживает врагов
